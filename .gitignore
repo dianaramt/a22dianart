@@ -54,3 +54,11 @@ coverage
 ##### FIN DE TEMPLATE #####
 
 # Incluye los ignores que consideres a partir de aquí
+
+# Python / Django
+.venv/
+__pycache__/
+*.pyc
+db.sqlite3
+/media/
+/staticfiles/
