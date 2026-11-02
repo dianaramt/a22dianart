@@ -1,0 +1,25 @@
+{# Pinta os campos dun formulario con Bootstrap. Uso: {% include "_formulario.html" with form=form %} #}
+{% if form.non_field_errors %}
+  <div class="alert alert-danger" role="alert">
+    {% for erro in form.non_field_errors %}<p class="mb-0">{{ erro }}</p>{% endfor %}
+  </div>
+{% endif %}
+
+{% for campo in form.hidden_fields %}{{ campo }}{% endfor %}
+
+{% for campo in form.visible_fields %}
+  <div class="mb-3">
+    <label for="{{ campo.id_for_label }}" class="form-label">
+      {{ campo.label }}{% if campo.field.required %} <span aria-hidden="true" class="text-danger">*</span>{% endif %}
+    </label>
+    {{ campo }}
+    {% if campo.errors %}
+      <div id="{{ campo.html_name }}-erros" class="invalid-feedback d-block">
+        {% for erro in campo.errors %}<p class="mb-0">{{ erro }}</p>{% endfor %}
+      </div>
+    {% endif %}
+    {% if campo.help_text %}
+      <div class="form-text">{{ campo.help_text|safe }}</div>
+    {% endif %}
+  </div>
+{% endfor %}

@@ -1,0 +1,45 @@
+{% extends "centros/base_centro.html" %}
+{% load i18n %}
+
+{% block titulo %}{{ centro.nome }} · Bambi{% endblock %}
+
+{% block contido_centro %}
+{% if centro.descricion %}
+  <section class="mb-4 col-lg-9">
+    <p class="lead">{{ centro.descricion|linebreaksbr }}</p>
+  </section>
+{% endif %}
+
+<section aria-labelledby="titulo-catalogo">
+  <h2 id="titulo-catalogo" class="h4 mb-3">{% translate "Catálogo" %}</h2>
+
+  {% blocktranslate with nome=centro.nome asvar etiqueta %}Buscar en {{ nome }}{% endblocktranslate %}
+  {% url 'centros:escaparate' centro.slug as accion %}
+  {% include "catalogo/_formulario_busca.html" with accion=accion etiqueta=etiqueta %}
+
+  {% if consulta %}
+    <p class="text-muted">
+      <output>{% blocktranslate count total=paxina.paginator.count with consulta=consulta %}{{ total }} resultado para «{{ consulta }}»{% plural %}{{ total }} resultados para «{{ consulta }}»{% endblocktranslate %}</output>
+      · <a href="{% url 'centros:escaparate' centro.slug %}">{% translate "Ver todo o catálogo" %}</a>
+    </p>
+  {% endif %}
+
+  {% if paxina.object_list %}
+    <ul class="list-group mb-4">
+      {% for exemplar in paxina %}
+        <li class="list-group-item d-flex justify-content-between align-items-start gap-3">
+          <div>
+            <a href="{% url 'catalogo:detalle' centro.slug exemplar.pk %}" class="fw-semibold">{{ exemplar.titulo }}</a>
+            <div class="small text-muted">{{ exemplar.autoria }}</div>
+          </div>
+          {% include "catalogo/_estado.html" %}
+        </li>
+      {% endfor %}
+    </ul>
+
+    {% include "catalogo/_paxinacion.html" %}
+  {% elif not consulta %}
+    <p class="text-muted">{% translate "Este centro aínda non publicou libros." %}</p>
+  {% endif %}
+</section>
+{% endblock %}

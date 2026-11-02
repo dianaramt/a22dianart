@@ -1,0 +1,57 @@
+{% extends "panel/base_panel.html" %}
+{% load i18n %}
+
+{% block contido_panel %}
+<div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3">
+  <form method="get" class="d-flex flex-wrap gap-2" role="search">
+    <label for="q" class="visually-hidden">{% translate "Buscar no catálogo" %}</label>
+    <input type="search" id="q" name="q" value="{{ consulta }}" maxlength="100" class="form-control"
+           placeholder="{% translate 'Título, autor/a ou ISBN' %}">
+    <label for="estado" class="visually-hidden">{% translate "Estado" %}</label>
+    <select id="estado" name="estado" class="form-select w-auto">
+      <option value="">{% translate "Todos os estados" %}</option>
+      {% for valor, nome in estados %}
+        <option value="{{ valor }}" {% if valor == estado %}selected{% endif %}>{{ nome }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-outline-secondary">{% translate "Filtrar" %}</button>
+  </form>
+  <a href="{% url 'panel:exemplar_novo' centro.slug %}" class="btn btn-bambi">{% translate "Engadir libro" %}</a>
+</div>
+
+{% if paxina.object_list %}
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead>
+        <tr>
+          <th scope="col">{% translate "Título" %}</th>
+          <th scope="col">{% translate "Autoría" %}</th>
+          <th scope="col">ISBN</th>
+          <th scope="col">{% translate "Estado" %}</th>
+          <th scope="col"><span class="visually-hidden">{% translate "Accións" %}</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for exemplar in paxina %}
+          <tr>
+            <td>{{ exemplar.titulo }}</td>
+            <td>{{ exemplar.autoria }}</td>
+            <td class="small">{{ exemplar.isbn|default:"—" }}</td>
+            <td>{% include "catalogo/_estado.html" %}</td>
+            <td class="text-end">
+              <a href="{% url 'panel:exemplar_editar' centro.slug exemplar.pk %}" class="btn btn-sm btn-outline-primary">
+                {% translate "Editar" %}<span class="visually-hidden"> {{ exemplar.titulo }}</span>
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% include "catalogo/_paxinacion.html" %}
+{% elif consulta or estado %}
+  <p class="text-muted">{% translate "Ningún libro coincide co filtro." %}</p>
+{% else %}
+  <p class="text-muted">{% translate "O catálogo está baleiro. Engade o primeiro libro." %}</p>
+{% endif %}
+{% endblock %}

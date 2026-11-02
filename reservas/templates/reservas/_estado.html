@@ -1,0 +1,4 @@
+{# Etiqueta do estado dunha reserva. Uso: {% include "reservas/_estado.html" with reserva=r %} #}
+<span class="badge {% if reserva.estado == 'activa' %}text-bg-primary{% elif reserva.estado == 'recollida' or reserva.estado == 'devolta' %}text-bg-success{% elif reserva.estado == 'non_recollida' %}text-bg-danger{% else %}text-bg-secondary{% endif %}">
+  {{ reserva.get_estado_display }}
+</span>

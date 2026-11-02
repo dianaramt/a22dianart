@@ -1,0 +1,1105 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-01 16:31+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\catalogo\models.py:13
+msgid "Dispoñible"
+msgstr "Available"
+
+#: .\catalogo\models.py:14
+msgid "Reservado"
+msgstr "Reserved"
+
+#: .\catalogo\models.py:15
+msgid "Prestado"
+msgstr "On loan"
+
+#: .\catalogo\models.py:17
+msgid "Retirado"
+msgstr "Withdrawn"
+
+#: .\catalogo\models.py:19 .\centros\models.py:59
+msgid "centro"
+msgstr "centre"
+
+#: .\catalogo\models.py:20
+msgid "título"
+msgstr "title"
+
+#: .\catalogo\models.py:21
+msgid "autoría"
+msgstr "author"
+
+#: .\catalogo\models.py:23
+msgid "ISBN"
+msgstr "ISBN"
+
+#: .\catalogo\models.py:24 .\centros\models.py:35
+msgid "descrición"
+msgstr "description"
+
+#: .\catalogo\models.py:25 .\centros\models.py:37 .\reservas\models.py:25
+msgid "estado"
+msgstr "status"
+
+#: .\catalogo\models.py:26 .\centros\models.py:56 .\reservas\models.py:26
+msgid "creado en"
+msgstr "created at"
+
+#: .\catalogo\models.py:31 .\reservas\models.py:24
+msgid "exemplar"
+msgstr "copy"
+
+#: .\catalogo\models.py:32
+msgid "exemplares"
+msgstr "copies"
+
+#: .\catalogo\templates\catalogo\_formulario_busca.html:7
+#: .\panel\templates\panel\catalogo.html:9
+msgid "Título, autor/a ou ISBN"
+msgstr "Title, author or ISBN"
+
+#: .\catalogo\templates\catalogo\_formulario_busca.html:8
+#: .\templates\base.html:30
+msgid "Buscar"
+msgstr "Search"
+
+#: .\catalogo\templates\catalogo\_paxinacion.html:4
+msgid "Páxinas de resultados"
+msgstr "Result pages"
+
+#: .\catalogo\templates\catalogo\_paxinacion.html:8
+msgid "Anterior"
+msgstr "Previous"
+
+#: .\catalogo\templates\catalogo\_paxinacion.html:16
+msgid "Seguinte"
+msgstr "Next"
+
+#: .\catalogo\templates\catalogo\buscar.html:4
+#: .\catalogo\templates\catalogo\buscar.html:8
+msgid "Buscar libros"
+msgstr "Search books"
+
+#: .\catalogo\templates\catalogo\buscar.html:9
+#: .\centros\templates\centros\portada.html:14
+msgid "Buscar en todos os centros"
+msgstr "Search all centres"
+
+#: .\catalogo\templates\catalogo\buscar.html:15
+#: .\centros\templates\centros\escaparate.html:22
+#, python-format
+msgid "%(total)s resultado para «%(consulta)s»"
+msgid_plural "%(total)s resultados para «%(consulta)s»"
+msgstr[0] "%(total)s result for “%(consulta)s”"
+msgstr[1] "%(total)s results for “%(consulta)s”"
+
+#: .\catalogo\templates\catalogo\detalle.html:7
+#: .\panel\templates\panel\plataforma\centro_detalle.html:8
+#: .\panel\templates\panel\plataforma\centro_novo.html:8
+msgid "Ruta de navegación"
+msgstr "Breadcrumb"
+
+#: .\catalogo\templates\catalogo\detalle.html:9
+#: .\centros\templates\centros\escaparate.html:14
+#: .\panel\templates\panel\base_panel.html:34
+msgid "Catálogo"
+msgstr "Catalogue"
+
+#: .\catalogo\templates\catalogo\detalle.html:24
+#: .\panel\templates\panel\plataforma\inicio.html:35
+#: .\reservas\templates\reservas\area_persoal.html:53
+msgid "Centro"
+msgstr "Centre"
+
+#: .\catalogo\templates\catalogo\detalle.html:35
+msgid "Xa tes este libro reservado."
+msgstr "You have already reserved this book."
+
+#: .\catalogo\templates\catalogo\detalle.html:36
+msgid "Ver a reserva"
+msgstr "View reservation"
+
+#: .\catalogo\templates\catalogo\detalle.html:41
+msgid "Reservar"
+msgstr "Reserve"
+
+#: .\catalogo\templates\catalogo\detalle.html:43
+msgid "Necesitas unha conta de lector para reservar."
+msgstr "You need a reader account to reserve."
+
+#: .\catalogo\templates\catalogo\detalle.html:47
+msgid "Este exemplar non se pode reservar agora mesmo."
+msgstr "This copy cannot be reserved right now."
+
+#: .\centros\models.py:7
+msgid "Introduce unha cor en formato #rrggbb"
+msgstr "Enter a colour in #rrggbb format"
+
+#: .\centros\models.py:18
+msgid "Libraría"
+msgstr "Bookshop"
+
+#: .\centros\models.py:19
+msgid "Biblioteca"
+msgstr "Library"
+
+#: .\centros\models.py:22
+msgid "Pendente"
+msgstr "Pending"
+
+#: .\centros\models.py:23
+msgid "Activo"
+msgstr "Active"
+
+#: .\centros\models.py:24
+msgid "Desactivado"
+msgstr "Deactivated"
+
+#: .\centros\models.py:27
+msgid "Sen serifa"
+msgstr "Sans-serif"
+
+#: .\centros\models.py:28
+msgid "Con serifa"
+msgstr "Serif"
+
+#: .\centros\models.py:29
+msgid "Monoespazada"
+msgstr "Monospace"
+
+#: .\centros\models.py:31
+msgid "nome"
+msgstr "name"
+
+#: .\centros\models.py:32
+msgid "tipo"
+msgstr "type"
+
+#: .\centros\models.py:34
+msgid "slug"
+msgstr "slug"
+
+#: .\centros\models.py:36
+msgid "localización"
+msgstr "location"
+
+#: .\centros\models.py:40
+msgid "logo"
+msgstr "logo"
+
+#: .\centros\models.py:41
+msgid "cor principal"
+msgstr "main colour"
+
+#: .\centros\models.py:42
+msgid "cor secundaria"
+msgstr "secondary colour"
+
+#: .\centros\models.py:43
+msgid "tipografía"
+msgstr "typeface"
+
+#: .\centros\models.py:46
+msgid "días para recoller"
+msgstr "days to collect"
+
+#: .\centros\models.py:53
+msgid "administradores"
+msgstr "administrators"
+
+#: .\centros\models.py:60
+msgid "centros"
+msgstr "centres"
+
+#: .\centros\templates\centros\base_centro.html:20
+#, python-format
+msgid "Logo de %(nome)s"
+msgstr "%(nome)s logo"
+
+#: .\centros\templates\centros\escaparate.html:16
+#, python-format
+msgid "Buscar en %(nome)s"
+msgstr "Search %(nome)s"
+
+#: .\centros\templates\centros\escaparate.html:23
+msgid "Ver todo o catálogo"
+msgstr "View full catalogue"
+
+#: .\centros\templates\centros\escaparate.html:42
+msgid "Este centro aínda non publicou libros."
+msgstr "This centre has not published any books yet."
+
+#: .\centros\templates\centros\portada.html:4
+msgid "Librarías e bibliotecas da túa contorna"
+msgstr "Bookshops and libraries near you"
+
+#: .\centros\templates\centros\portada.html:9
+msgid "Atopa o teu próximo libro preto de ti"
+msgstr "Find your next book close to home"
+
+#: .\centros\templates\centros\portada.html:11
+msgid ""
+"Consulta o catálogo das librarías e bibliotecas da túa contorna, comproba se"
+" o libro está dispoñible e resérvao para recollelo en persoa."
+msgstr ""
+"Browse the catalogues of bookshops and libraries near you, check whether a "
+"book is available and reserve it to collect in person."
+
+#: .\centros\templates\centros\portada.html:22
+msgid "Centros"
+msgstr "Centres"
+
+#: .\centros\templates\centros\portada.html:49
+msgid "Aínda non hai centros dispoñibles."
+msgstr "There are no centres available yet."
+
+#: .\panel\forms.py:16
+msgid "Opcional. 10 ou 13 díxitos, con ou sen guións."
+msgstr "Optional. 10 or 13 digits, with or without hyphens."
+
+#: .\panel\forms.py:24
+msgid ""
+"Este exemplar ten unha reserva ou préstamo en curso; o estado cámbiase desde"
+" Reservas."
+msgstr ""
+"This copy has a reservation or loan in progress; its status is changed from "
+"Reservations."
+
+#: .\panel\forms.py:28
+msgid ""
+"«Prestado» permite rexistrar un préstamo feito no mostrador, sen reserva."
+msgstr ""
+"“On loan” lets you record a loan made at the desk, without a reservation."
+
+#: .\panel\forms.py:47
+msgid "O ISBN debe ter 10 ou 13 díxitos."
+msgstr "The ISBN must have 10 or 13 digits."
+
+#: .\panel\forms.py:64
+msgid ""
+"Úsase no menú e nos botóns: escolle unha cor escura para que o texto branco "
+"se lea ben."
+msgstr ""
+"Used in the menu and buttons: choose a dark colour so that white text stays "
+"readable."
+
+#: .\panel\forms.py:65
+msgid "Días que ten o lector para recoller unha reserva (entre 1 e 30)."
+msgstr "Days the reader has to collect a reservation (between 1 and 30)."
+
+#: .\panel\forms.py:71
+msgid "Indica un valor entre 1 e 30 días."
+msgstr "Enter a value between 1 and 30 days."
+
+#: .\panel\forms.py:78
+msgid "O logo non pode ocupar máis de 2 MB."
+msgstr "The logo cannot be larger than 2 MB."
+
+#: .\panel\forms_plataforma.py:16
+msgid ""
+"Parte da URL do escaparate (/centro/<slug>/). Se o deixas baleiro, xérase a "
+"partir do nome."
+msgstr ""
+"Part of the shopfront URL (/centro/<slug>/). If left blank, it is generated "
+"from the name."
+
+#: .\panel\forms_plataforma.py:25
+msgid "Indica un slug válido."
+msgstr "Enter a valid slug."
+
+#: .\panel\forms_plataforma.py:37
+msgid "Correo do administrador"
+msgstr "Administrator email"
+
+#: .\panel\forms_plataforma.py:38
+msgid "Nome visible"
+msgstr "Display name"
+
+#: .\panel\forms_plataforma.py:40
+msgid "Contrasinal inicial"
+msgstr "Initial password"
+
+#: .\panel\forms_plataforma.py:41
+msgid "Só se a conta é nova. Comunícalla ao centro por unha canle segura."
+msgstr ""
+"Only for new accounts. Share it with the centre through a secure channel."
+
+#: .\panel\forms_plataforma.py:43
+msgid "Repite o contrasinal"
+msgstr "Repeat the password"
+
+#: .\panel\forms_plataforma.py:56
+msgid ""
+"Este correo pertence a unha conta que non é de administrador de centro."
+msgstr "This email belongs to an account that is not a centre administrator."
+
+#: .\panel\forms_plataforma.py:58
+msgid "Esta persoa xa administra o centro."
+msgstr "This person already manages the centre."
+
+#: .\panel\forms_plataforma.py:69
+msgid "As contas novas necesitan un contrasinal inicial."
+msgstr "New accounts need an initial password."
+
+#: .\panel\forms_plataforma.py:71
+msgid "Os contrasinais non coinciden."
+msgstr "The passwords do not match."
+
+#: .\panel\templates\panel\base_panel.html:4
+msgid "Panel"
+msgstr "Dashboard"
+
+#: .\panel\templates\panel\base_panel.html:10 .\templates\base.html:38
+msgid "Panel do centro"
+msgstr "Centre dashboard"
+
+#: .\panel\templates\panel\base_panel.html:14
+msgid "Ver escaparate público"
+msgstr "View public shopfront"
+
+#: .\panel\templates\panel\base_panel.html:20
+msgid ""
+"O centro aínda non está activo: podes preparar o catálogo, pero o escaparate"
+" non é público ata que a plataforma o active."
+msgstr ""
+"The centre is not active yet: you can prepare the catalogue, but the "
+"shopfront will not be public until the platform activates it."
+
+#: .\panel\templates\panel\base_panel.html:28
+msgid "Seccións do panel"
+msgstr "Dashboard sections"
+
+#: .\panel\templates\panel\base_panel.html:31
+msgid "Resumo"
+msgstr "Overview"
+
+#: .\panel\templates\panel\base_panel.html:37
+msgid "Reservas"
+msgstr "Reservations"
+
+#: .\panel\templates\panel\base_panel.html:40
+msgid "Escaparate"
+msgstr "Shopfront"
+
+#: .\panel\templates\panel\catalogo.html:7
+msgid "Buscar no catálogo"
+msgstr "Search the catalogue"
+
+#: .\panel\templates\panel\catalogo.html:10
+#: .\panel\templates\panel\catalogo.html:30
+#: .\panel\templates\panel\plataforma\centro_detalle.html:32
+#: .\panel\templates\panel\reservas.html:83
+#: .\reservas\templates\reservas\area_persoal.html:55
+msgid "Estado"
+msgstr "Status"
+
+#: .\panel\templates\panel\catalogo.html:12
+msgid "Todos os estados"
+msgstr "All statuses"
+
+#: .\panel\templates\panel\catalogo.html:17
+msgid "Filtrar"
+msgstr "Filter"
+
+#: .\panel\templates\panel\catalogo.html:19
+#: .\panel\templates\panel\exemplar_form.html:6
+#: .\panel\templates\panel\resumo.html:40
+msgid "Engadir libro"
+msgstr "Add book"
+
+#: .\panel\templates\panel\catalogo.html:27
+msgid "Título"
+msgstr "Title"
+
+#: .\panel\templates\panel\catalogo.html:28
+msgid "Autoría"
+msgstr "Author"
+
+#: .\panel\templates\panel\catalogo.html:31
+#: .\panel\templates\panel\reservas.html:15
+msgid "Accións"
+msgstr "Actions"
+
+#: .\panel\templates\panel\catalogo.html:43
+msgid "Editar"
+msgstr "Edit"
+
+#: .\panel\templates\panel\catalogo.html:53
+msgid "Ningún libro coincide co filtro."
+msgstr "No books match the filter."
+
+#: .\panel\templates\panel\catalogo.html:55
+msgid "O catálogo está baleiro. Engade o primeiro libro."
+msgstr "The catalogue is empty. Add the first book."
+
+#: .\panel\templates\panel\escaparate.html:6
+msgid "Personalizar escaparate"
+msgstr "Customise shopfront"
+
+#: .\panel\templates\panel\escaparate.html:9
+msgid "Logo actual"
+msgstr "Current logo"
+
+#: .\panel\templates\panel\escaparate.html:16
+msgid "Gardar cambios"
+msgstr "Save changes"
+
+#: .\panel\templates\panel\exemplar_form.html:6
+msgid "Editar libro"
+msgstr "Edit book"
+
+#: .\panel\templates\panel\exemplar_form.html:12
+msgid "Gardar"
+msgstr "Save"
+
+#: .\panel\templates\panel\exemplar_form.html:14
+msgid "Gardar e engadir outro"
+msgstr "Save and add another"
+
+#: .\panel\templates\panel\exemplar_form.html:16
+#: .\panel\templates\panel\plataforma\centro_novo.html:33
+#: .\reservas\templates\reservas\area_persoal.html:29
+msgid "Cancelar"
+msgstr "Cancel"
+
+#: .\panel\templates\panel\exemplar_form.html:22
+msgid ""
+"Para quitar un libro do catálogo público, cambia o seu estado a «Retirado». "
+"Non se borra para conservar o historial de reservas."
+msgstr ""
+"To remove a book from the public catalogue, change its status to "
+"“Withdrawn”. It is not deleted, so its reservation history is kept."
+
+#: .\panel\templates\panel\inicio.html:4 .\panel\templates\panel\inicio.html:8
+msgid "Os meus centros"
+msgstr "My centres"
+
+#: .\panel\templates\panel\inicio.html:18
+msgid "Aínda non tes ningún centro asignado. Contacta coa plataforma."
+msgstr "You have no centre assigned yet. Please contact the platform."
+
+#: .\panel\templates\panel\plataforma\centro_detalle.html:4
+#: .\panel\templates\panel\plataforma\centro_detalle.html:10
+#: .\panel\templates\panel\plataforma\centro_novo.html:10
+#: .\panel\templates\panel\plataforma\inicio.html:4
+#: .\panel\templates\panel\plataforma\inicio.html:10 .\templates\base.html:42
+msgid "Panel da plataforma"
+msgstr "Platform dashboard"
+
+#: .\panel\templates\panel\plataforma\centro_detalle.html:24
+msgid "Ver escaparate"
+msgstr "View shopfront"
+
+#: .\panel\templates\panel\plataforma\centro_detalle.html:34
+#, python-format
+msgid "%(total)s libro no catálogo"
+msgid_plural "%(total)s libros no catálogo"
+msgstr[0] "%(total)s book in the catalogue"
+msgstr[1] "%(total)s books in the catalogue"
+
+#: .\panel\templates\panel\plataforma\centro_detalle.html:35
+#, python-format
+msgid "%(total)s reserva activa"
+msgid_plural "%(total)s reservas activas"
+msgstr[0] "%(total)s active reservation"
+msgstr[1] "%(total)s active reservations"
+
+#: .\panel\templates\panel\plataforma\centro_detalle.html:41
+msgid "Activar"
+msgstr "Activate"
+
+#: .\panel\templates\panel\plataforma\centro_detalle.html:47
+msgid "Desactivar"
+msgstr "Deactivate"
+
+#: .\panel\templates\panel\plataforma\centro_detalle.html:53
+msgid "Volver a pendente"
+msgstr "Set back to pending"
+
+#: .\panel\templates\panel\plataforma\centro_detalle.html:59
+msgid ""
+"Se o desactivas, o escaparate e o panel deixan de estar accesibles, pero as "
+"reservas activas non se cancelan automaticamente."
+msgstr ""
+"If you deactivate it, the shopfront and dashboard become inaccessible, but "
+"active reservations are not cancelled automatically."
+
+#: .\panel\templates\panel\plataforma\centro_detalle.html:67
+msgid "Descrición"
+msgstr "Description"
+
+#: .\panel\templates\panel\plataforma\centro_detalle.html:75
+#: .\panel\templates\panel\plataforma\inicio.html:37
+msgid "Administradores"
+msgstr "Administrators"
+
+#: .\panel\templates\panel\plataforma\centro_detalle.html:84
+msgid "Quitar"
+msgstr "Remove"
+
+#: .\panel\templates\panel\plataforma\centro_detalle.html:91
+msgid "Este centro non ten administrador. Asigna un antes de activalo."
+msgstr "This centre has no administrator. Assign one before activating it."
+
+#: .\panel\templates\panel\plataforma\centro_detalle.html:95
+msgid "Engadir administrador"
+msgstr "Add administrator"
+
+#: .\panel\templates\panel\plataforma\centro_detalle.html:100
+msgid "Engadir"
+msgstr "Add"
+
+#: .\panel\templates\panel\plataforma\centro_novo.html:4
+#: .\panel\templates\panel\plataforma\centro_novo.html:15
+#: .\panel\templates\panel\plataforma\inicio.html:15
+msgid "Dar de alta un centro"
+msgstr "Register a centre"
+
+#: .\panel\templates\panel\plataforma\centro_novo.html:11
+msgid "Novo centro"
+msgstr "New centre"
+
+#: .\panel\templates\panel\plataforma\centro_novo.html:17
+msgid ""
+"Antes de dar de alta o centro, comproba a documentación que acredita a súa "
+"existencia. O centro créase como «Pendente» e non será público ata que o "
+"actives."
+msgstr ""
+"Before registering the centre, check the documents that prove it exists. The"
+" centre is created as “Pending” and will not be public until you activate "
+"it."
+
+#: .\panel\templates\panel\plataforma\centro_novo.html:23
+msgid "Datos do centro"
+msgstr "Centre details"
+
+#: .\panel\templates\panel\plataforma\centro_novo.html:27
+msgid "Primeiro administrador"
+msgstr "First administrator"
+
+#: .\panel\templates\panel\plataforma\centro_novo.html:28
+msgid ""
+"Se o correo xa ten unha conta de administrador, non fai falta contrasinal."
+msgstr ""
+"If the email already has an administrator account, no password is needed."
+
+#: .\panel\templates\panel\plataforma\centro_novo.html:32
+msgid "Crear centro"
+msgstr "Create centre"
+
+#: .\panel\templates\panel\plataforma\inicio.html:12
+#, python-format
+msgid "%(total)s lector rexistrado"
+msgid_plural "%(total)s lectores rexistrados"
+msgstr[0] "%(total)s registered reader"
+msgstr[1] "%(total)s registered readers"
+
+#: .\panel\templates\panel\plataforma\inicio.html:18
+msgid "Centros por estado"
+msgstr "Centres by status"
+
+#: .\panel\templates\panel\plataforma\inicio.html:36
+msgid "Tipo"
+msgstr "Type"
+
+#: .\panel\templates\panel\plataforma\inicio.html:38
+msgid "Libros"
+msgstr "Books"
+
+#: .\panel\templates\panel\plataforma\inicio.html:39
+msgid "Alta"
+msgstr "Registered"
+
+#: .\panel\templates\panel\plataforma\inicio.html:50
+msgid "Ningún"
+msgstr "None"
+
+#: .\panel\templates\panel\plataforma\inicio.html:59
+msgid "Non hai centros neste estado."
+msgstr "There are no centres with this status."
+
+#: .\panel\templates\panel\reservas.html:6
+msgid "Pendentes de recoller"
+msgstr "Awaiting collection"
+
+#: .\panel\templates\panel\reservas.html:12
+#: .\panel\templates\panel\reservas.html:80
+#: .\reservas\templates\reservas\area_persoal.html:52
+msgid "Libro"
+msgstr "Book"
+
+#: .\panel\templates\panel\reservas.html:13
+#: .\panel\templates\panel\reservas.html:81 .\usuarios\models.py:37
+msgid "Lector"
+msgstr "Reader"
+
+#: .\panel\templates\panel\reservas.html:14
+#: .\reservas\templates\reservas\area_persoal.html:23
+#: .\reservas\templates\reservas\detalle.html:20
+msgid "Recoller antes do"
+msgstr "Collect by"
+
+#: .\panel\templates\panel\reservas.html:25
+msgid "Prazo vencido"
+msgstr "Deadline passed"
+
+#: .\panel\templates\panel\reservas.html:31 .\reservas\models.py:16
+msgid "Recollida"
+msgstr "Collected"
+
+#: .\panel\templates\panel\reservas.html:35 .\reservas\models.py:17
+msgid "Non recollida"
+msgstr "Not collected"
+
+#: .\panel\templates\panel\reservas.html:45
+msgid "Non hai reservas pendentes."
+msgstr "There are no pending reservations."
+
+#: .\panel\templates\panel\reservas.html:51
+msgid "Préstamos en curso"
+msgstr "Current loans"
+
+#: .\panel\templates\panel\reservas.html:58
+msgid "desde o"
+msgstr "since"
+
+#: .\panel\templates\panel\reservas.html:62
+msgid "Rexistrar devolución"
+msgstr "Record return"
+
+#: .\panel\templates\panel\reservas.html:68
+msgid "Non hai préstamos en curso."
+msgstr "There are no current loans."
+
+#: .\panel\templates\panel\reservas.html:74
+msgid "Últimos movementos"
+msgstr "Recent activity"
+
+#: .\panel\templates\panel\reservas.html:82
+#: .\reservas\templates\reservas\area_persoal.html:54
+msgid "Data"
+msgstr "Date"
+
+#: .\panel\templates\panel\reservas.html:99
+msgid "Aínda non hai movementos."
+msgstr "No activity yet."
+
+#: .\panel\templates\panel\resumo.html:9
+msgid "Libros no catálogo"
+msgstr "Books in catalogue"
+
+#: .\panel\templates\panel\resumo.html:15
+msgid "Dispoñibles"
+msgstr "Available"
+
+#: .\panel\templates\panel\resumo.html:21
+msgid "Reservas activas"
+msgstr "Active reservations"
+
+#: .\panel\templates\panel\resumo.html:27
+msgid "Prestados"
+msgstr "On loan"
+
+#: .\panel\templates\panel\resumo.html:34
+#, python-format
+msgid "Hai %(total)s reserva coa data de recollida xa pasada."
+msgid_plural "Hai %(total)s reservas coa data de recollida xa pasada."
+msgstr[0] "There is %(total)s reservation past its collection date."
+msgstr[1] "There are %(total)s reservations past their collection date."
+
+#: .\panel\templates\panel\resumo.html:35
+msgid "Revisar reservas"
+msgstr "Review reservations"
+
+#: .\panel\templates\panel\resumo.html:41
+msgid "Atender reservas"
+msgstr "Handle reservations"
+
+#: .\panel\views.py:77
+msgid "Libro engadido ao catálogo."
+msgstr "Book added to the catalogue."
+
+#: .\panel\views.py:100
+msgid ""
+"Gardáronse os datos, pero o estado non: cambiou mentres editabas (quizais "
+"alguén o reservou)."
+msgstr ""
+"The details were saved, but not the status: it changed while you were "
+"editing (someone may have reserved it)."
+
+#: .\panel\views.py:102
+msgid "Libro actualizado."
+msgstr "Book updated."
+
+#: .\panel\views.py:126
+msgid "Reserva marcada como recollida."
+msgstr "Reservation marked as collected."
+
+#: .\panel\views.py:127
+msgid "Reserva marcada como non recollida. O libro volve estar dispoñible."
+msgstr "Reservation marked as not collected. The book is available again."
+
+#: .\panel\views.py:128
+msgid "Devolución rexistrada. O libro volve estar dispoñible."
+msgstr "Return recorded. The book is available again."
+
+#: .\panel\views.py:154
+msgid "Escaparate actualizado."
+msgstr "Shopfront updated."
+
+#: .\panel\views_plataforma.py:47
+msgid "Centro creado. Revisa os datos e actívao cando estea listo."
+msgstr "Centre created. Check the details and activate it when it is ready."
+
+#: .\panel\views_plataforma.py:59
+#, python-format
+msgid "%(usuario)s xa pode xestionar o centro."
+msgstr "%(usuario)s can now manage the centre."
+
+#: .\panel\views_plataforma.py:77
+msgid "Asigna polo menos un administrador antes de activar o centro."
+msgstr "Assign at least one administrator before activating the centre."
+
+#: .\panel\views_plataforma.py:81
+#, python-format
+msgid "Estado do centro: %(estado)s."
+msgstr "Centre status: %(estado)s."
+
+#: .\panel\views_plataforma.py:91
+msgid "Un centro activo debe ter polo menos un administrador."
+msgstr "An active centre must have at least one administrator."
+
+#: .\panel\views_plataforma.py:95
+#, python-format
+msgid "%(usuario)s xa non administra este centro."
+msgstr "%(usuario)s no longer manages this centre."
+
+#: .\reservas\models.py:14
+msgid "Activa"
+msgstr "Active"
+
+#: .\reservas\models.py:15
+msgid "Cancelada"
+msgstr "Cancelled"
+
+#: .\reservas\models.py:18
+msgid "Caducada"
+msgstr "Expired"
+
+#: .\reservas\models.py:19
+msgid "Devolta"
+msgstr "Returned"
+
+#: .\reservas\models.py:22
+msgid "lector"
+msgstr "reader"
+
+#: .\reservas\models.py:27
+msgid "vence en"
+msgstr "expires at"
+
+#: .\reservas\models.py:28
+msgid "actualizado en"
+msgstr "updated at"
+
+#: .\reservas\models.py:30
+msgid "puntos aplicados"
+msgstr "points applied"
+
+#: .\reservas\models.py:33
+msgid "reserva"
+msgstr "reservation"
+
+#: .\reservas\models.py:34
+msgid "reservas"
+msgstr "reservations"
+
+#: .\reservas\servizos.py:22
+msgid "Só as contas de lector poden reservar libros."
+msgstr "Only reader accounts can reserve books."
+
+#: .\reservas\servizos.py:34 .\reservas\servizos.py:45
+msgid "Este libro xa non está dispoñible."
+msgstr "This book is no longer available."
+
+#: .\reservas\servizos.py:55
+msgid "Non se atopou ningunha reserva activa para cancelar."
+msgstr "No active reservation was found to cancel."
+
+#: .\reservas\servizos.py:59
+#, python-format
+msgid ""
+"Xa pasou o prazo de %(minutos)s minutos para cancelar. Se non vas recollela,"
+" avisa ao centro."
+msgstr ""
+"The %(minutos)s-minute cancellation window has passed. If you are not going "
+"to collect it, let the centre know."
+
+#: .\reservas\servizos.py:81
+msgid "A reserva non existe ou xa foi atendida."
+msgstr "The reservation does not exist or has already been handled."
+
+#: .\reservas\servizos.py:111
+msgid "Só as bibliotecas rexistran devolucións."
+msgstr "Only libraries record returns."
+
+#: .\reservas\templates\reservas\_aviso_cancelacion.html:5
+#, python-format
+msgid "Podes cancelala ata as %(hora)s."
+msgstr "You can cancel it until %(hora)s."
+
+#: .\reservas\templates\reservas\_aviso_cancelacion.html:9
+msgid ""
+"Xa non se pode cancelar. Se finalmente non vas recollela, avisa ao centro."
+msgstr ""
+"It can no longer be cancelled. If you end up not collecting it, let the "
+"centre know."
+
+#: .\reservas\templates\reservas\area_persoal.html:4
+#: .\reservas\templates\reservas\area_persoal.html:8
+#: .\reservas\templates\reservas\detalle.html:33 .\templates\base.html:34
+msgid "As miñas reservas"
+msgstr "My reservations"
+
+#: .\reservas\templates\reservas\area_persoal.html:11
+msgid "Activas"
+msgstr "Active"
+
+#: .\reservas\templates\reservas\area_persoal.html:39
+msgid "Non tes reservas activas."
+msgstr "You have no active reservations."
+
+#: .\reservas\templates\reservas\area_persoal.html:40
+msgid "Buscar un libro"
+msgstr "Find a book"
+
+#: .\reservas\templates\reservas\area_persoal.html:46
+msgid "Historial"
+msgstr "History"
+
+#: .\reservas\templates\reservas\area_persoal.html:71
+msgid "Aínda non hai reservas anteriores."
+msgstr "No past reservations yet."
+
+#: .\reservas\templates\reservas\confirmar.html:4
+#: .\reservas\templates\reservas\confirmar.html:8
+#: .\reservas\templates\reservas\confirmar.html:39
+msgid "Confirmar reserva"
+msgstr "Confirm reservation"
+
+#: .\reservas\templates\reservas\confirmar.html:15
+#: .\reservas\templates\reservas\detalle.html:15
+msgid "Recollida en"
+msgstr "Collect at"
+
+#: .\reservas\templates\reservas\confirmar.html:17
+msgid "Prazo"
+msgstr "Deadline"
+
+#: .\reservas\templates\reservas\confirmar.html:19
+#, python-format
+msgid "Tes %(dias)s día para recollelo."
+msgid_plural "Tes %(dias)s días para recollelo."
+msgstr[0] "You have %(dias)s day to collect it."
+msgstr[1] "You have %(dias)s days to collect it."
+
+#: .\reservas\templates\reservas\confirmar.html:27
+msgid "O préstamo formalízase no centro ao recoller o libro."
+msgstr "The loan is completed at the centre when you collect the book."
+
+#: .\reservas\templates\reservas\confirmar.html:29
+msgid ""
+"O pagamento faise na libraría ao recoller o libro. Bambi non cobra nada."
+msgstr ""
+"You pay at the bookshop when you collect the book. Bambi charges nothing."
+
+#: .\reservas\templates\reservas\confirmar.html:34
+#, python-format
+msgid ""
+"Só poderás cancelar a reserva durante o primeiro minuto despois de "
+"confirmala."
+msgid_plural ""
+"Só poderás cancelar a reserva durante os %(minutos)s primeiros minutos "
+"despois de confirmala."
+msgstr[0] ""
+"You can only cancel the reservation during the first minute after confirming"
+" it."
+msgstr[1] ""
+"You can only cancel the reservation during the first %(minutos)s minutes "
+"after confirming it."
+
+#: .\reservas\templates\reservas\confirmar.html:40
+msgid "Volver"
+msgstr "Back"
+
+#: .\reservas\templates\reservas\detalle.html:4
+msgid "Reserva"
+msgstr "Reservation"
+
+#: .\reservas\templates\reservas\detalle.html:8
+msgid "A túa reserva"
+msgstr "Your reservation"
+
+#: .\reservas\templates\reservas\detalle.html:17
+msgid "Reservado o"
+msgstr "Reserved on"
+
+#: .\reservas\templates\reservas\detalle.html:28
+msgid "Achégate ao centro dentro do prazo e indica o teu nome ou correo."
+msgstr "Visit the centre before the deadline and give your name or email."
+
+#: .\reservas\templates\reservas\detalle.html:37
+msgid "Cancelar reserva"
+msgstr "Cancel reservation"
+
+#: .\reservas\views.py:25
+msgid "Reserva feita."
+msgstr "Reservation made."
+
+#: .\reservas\views.py:48
+msgid "Reserva cancelada."
+msgstr "Reservation cancelled."
+
+#: .\templates\base.html:14
+msgid "Saltar ao contido"
+msgstr "Skip to content"
+
+#: .\templates\base.html:21
+msgid "Abrir menú"
+msgstr "Open menu"
+
+#: .\templates\base.html:27
+msgid "Inicio"
+msgstr "Home"
+
+#: .\templates\base.html:60
+msgid "Pechar sesión"
+msgstr "Log out"
+
+#: .\templates\base.html:67 .\usuarios\templates\usuarios\entrar.html:4
+#: .\usuarios\templates\usuarios\entrar.html:10
+#: .\usuarios\templates\usuarios\rexistro.html:22
+msgid "Iniciar sesión"
+msgstr "Log in"
+
+#: .\templates\base.html:70 .\usuarios\templates\usuarios\rexistro.html:4
+#: .\usuarios\templates\usuarios\rexistro.html:17
+msgid "Crear conta"
+msgstr "Sign up"
+
+#: .\templates\base.html:79
+msgid "Idioma"
+msgstr "Language"
+
+#: .\templates\base.html:86
+msgid "Cambiar"
+msgstr "Change"
+
+#: .\usuarios\admin.py:17
+msgid "Datos persoais"
+msgstr "Personal details"
+
+#: .\usuarios\admin.py:18
+msgid "Rol e permisos"
+msgstr "Role and permissions"
+
+#: .\usuarios\admin.py:19
+msgid "Datas"
+msgstr "Dates"
+
+#: .\usuarios\forms.py:22
+msgid "Nome co que te verá o centro ao recoller a reserva."
+msgstr "The name the centre will see when you collect your reservation."
+
+#: .\usuarios\forms.py:28
+msgid "Xa existe unha conta con este correo."
+msgstr "An account with this email already exists."
+
+#: .\usuarios\models.py:14
+msgid "O correo é obrigatorio"
+msgstr "Email is required"
+
+#: .\usuarios\models.py:31
+msgid "Un superusuario debe ter is_staff e is_superuser"
+msgstr "A superuser must have is_staff and is_superuser"
+
+#: .\usuarios\models.py:38
+msgid "Administrador de centro"
+msgstr "Centre administrator"
+
+#: .\usuarios\models.py:39
+msgid "Superusuario"
+msgstr "Superuser"
+
+#: .\usuarios\models.py:43
+msgid "correo electrónico"
+msgstr "email address"
+
+#: .\usuarios\models.py:44
+msgid "nome visible"
+msgstr "display name"
+
+#: .\usuarios\models.py:45
+msgid "rol"
+msgstr "role"
+
+#: .\usuarios\models.py:47
+msgid "idioma"
+msgstr "language"
+
+#: .\usuarios\models.py:56
+msgid "usuario"
+msgstr "user"
+
+#: .\usuarios\models.py:57
+msgid "usuarios"
+msgstr "users"
+
+#: .\usuarios\templates\usuarios\entrar.html:13
+msgid "Inicia sesión para continuar."
+msgstr "Log in to continue."
+
+#: .\usuarios\templates\usuarios\entrar.html:20
+msgid "Entrar"
+msgstr "Log in"
+
+#: .\usuarios\templates\usuarios\entrar.html:24
+msgid "Aínda non tes conta?"
+msgstr "Don't have an account yet?"
+
+#: .\usuarios\templates\usuarios\entrar.html:25
+msgid "Crear unha conta"
+msgstr "Create an account"
+
+#: .\usuarios\templates\usuarios\rexistro.html:10
+msgid "Crear conta de lector"
+msgstr "Create a reader account"
+
+#: .\usuarios\templates\usuarios\rexistro.html:11
+msgid "Coa conta poderás reservar libros e recollelos no centro."
+msgstr "With an account you can reserve books and collect them at the centre."
+
+#: .\usuarios\templates\usuarios\rexistro.html:21
+msgid "Xa tes conta?"
+msgstr "Already have an account?"
+
+#: .\usuarios\views.py:77
+msgid "Conta creada. Benvido/a a Bambi!"
+msgstr "Account created. Welcome to Bambi!"

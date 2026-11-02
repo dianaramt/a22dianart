@@ -1,0 +1,4 @@
+{# Etiqueta de dispoñibilidade. Uso: {% include "catalogo/_estado.html" with exemplar=e %} #}
+<span class="badge {% if exemplar.esta_disponible %}text-bg-success{% elif exemplar.estado == 'reservado' %}text-bg-warning{% else %}text-bg-secondary{% endif %}">
+  {{ exemplar.get_estado_display }}
+</span>

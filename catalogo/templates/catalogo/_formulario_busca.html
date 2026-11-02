@@ -1,0 +1,10 @@
+{% load i18n %}
+{# Uso: {% include "catalogo/_formulario_busca.html" with accion=url etiqueta="..." %} #}
+<form action="{{ accion }}" method="get" role="search" class="mb-4">
+  <label for="q" class="form-label {% if not etiqueta_visible %}visually-hidden{% endif %}">{{ etiqueta }}</label>
+  <div class="input-group">
+    <input type="search" id="q" name="q" value="{{ consulta }}" maxlength="100" class="form-control"
+           placeholder="{% translate 'Título, autor/a ou ISBN' %}">
+    <button type="submit" class="btn btn-bambi">{% translate "Buscar" %}</button>
+  </div>
+</form>

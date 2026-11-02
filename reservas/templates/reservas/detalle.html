@@ -1,0 +1,42 @@
+{% extends "centros/base_centro.html" %}
+{% load i18n %}
+
+{% block titulo %}{% translate "Reserva" %} · {{ reserva.exemplar.titulo }} · Bambi{% endblock %}
+
+{% block contido_centro %}
+<div class="col-lg-7">
+  <h2 class="h3 mb-3">{% translate "A túa reserva" %} {% include "reservas/_estado.html" %}</h2>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <h3 class="h5 card-title">{{ reserva.exemplar.titulo }}</h3>
+      <p class="card-text text-muted">{{ reserva.exemplar.autoria }}</p>
+      <dl class="row mb-0">
+        <dt class="col-sm-4">{% translate "Recollida en" %}</dt>
+        <dd class="col-sm-8">{{ centro.nome }}{% if centro.localizacion %}<br>{{ centro.localizacion }}{% endif %}</dd>
+        <dt class="col-sm-4">{% translate "Reservado o" %}</dt>
+        <dd class="col-sm-8">{{ reserva.creado_en|date:"j/m/Y H:i" }}</dd>
+        {% if reserva.estado == 'activa' %}
+          <dt class="col-sm-4">{% translate "Recoller antes do" %}</dt>
+          <dd class="col-sm-8 fw-semibold">{{ reserva.vence_en|date:"j/m/Y H:i" }}</dd>
+        {% endif %}
+      </dl>
+    </div>
+  </div>
+
+  {% if reserva.estado == 'activa' %}
+    <p>{% translate "Achégate ao centro dentro do prazo e indica o teu nome ou correo." %}</p>
+    {% include "reservas/_aviso_cancelacion.html" %}
+  {% endif %}
+
+  <div class="d-flex gap-2">
+    <a href="{% url 'reservas:area_persoal' %}" class="btn btn-outline-secondary">{% translate "As miñas reservas" %}</a>
+    {% if reserva.pode_cancelarse %}
+      <form method="post" action="{% url 'reservas:cancelar' reserva.pk %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-danger">{% translate "Cancelar reserva" %}</button>
+      </form>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

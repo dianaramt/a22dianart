@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block estilos %}
+{# Identidade visual do centro: sobrescribe as variables de bambi.css #}
+<style>
+  :root {
+    --bambi-principal: {{ centro.cor_principal }};
+    --bambi-secundaria: {{ centro.cor_secundaria }};
+  }
+  .escaparate { font-family: {{ centro.familia_tipografica|safe }}; }
+</style>
+{% endblock %}
+
+{% block contido %}
+<div class="escaparate">
+  <header class="cabeceira-centro py-4 mb-4">
+    <div class="container d-flex align-items-center gap-3">
+      {% if centro.logo %}
+        <img src="{{ centro.logo.url }}" alt="{% blocktranslate with nome=centro.nome %}Logo de {{ nome }}{% endblocktranslate %}"
+             class="logo-centro rounded">
+      {% endif %}
+      <div>
+        <p class="mb-1 small text-uppercase">{{ centro.get_tipo_display }}</p>
+        <h1 class="h2 mb-1">
+          <a href="{% url 'centros:escaparate' centro.slug %}" class="link-body-emphasis text-decoration-none">{{ centro.nome }}</a>
+        </h1>
+        {% if centro.localizacion %}
+          <p class="mb-0 text-muted">{{ centro.localizacion }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    {% block contido_centro %}{% endblock %}
+  </div>
+</div>
+{% endblock %}

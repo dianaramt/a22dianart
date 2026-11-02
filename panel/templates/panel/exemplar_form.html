@@ -1,0 +1,26 @@
+{% extends "panel/base_panel.html" %}
+{% load i18n %}
+
+{% block contido_panel %}
+<div class="col-lg-8">
+  <h2 class="h4 mb-3">{% if exemplar %}{% translate "Editar libro" %}{% else %}{% translate "Engadir libro" %}{% endif %}</h2>
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {% include "_formulario.html" with form=form %}
+    <div class="d-flex flex-wrap gap-2">
+      <button type="submit" class="btn btn-bambi">{% translate "Gardar" %}</button>
+      {% if not exemplar %}
+        <button type="submit" name="gardar_e_outro" class="btn btn-outline-primary">{% translate "Gardar e engadir outro" %}</button>
+      {% endif %}
+      <a href="{% url 'panel:catalogo' centro.slug %}" class="btn btn-outline-secondary">{% translate "Cancelar" %}</a>
+    </div>
+  </form>
+
+  {% if exemplar %}
+    <p class="small text-muted mt-4">
+      {% translate "Para quitar un libro do catálogo público, cambia o seu estado a «Retirado». Non se borra para conservar o historial de reservas." %}
+    </p>
+  {% endif %}
+</div>
+{% endblock %}

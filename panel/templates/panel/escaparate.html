@@ -1,0 +1,19 @@
+{% extends "panel/base_panel.html" %}
+{% load i18n %}
+
+{% block contido_panel %}
+<div class="col-lg-8">
+  <h2 class="h4 mb-3">{% translate "Personalizar escaparate" %}</h2>
+
+  {% if centro.logo %}
+    <p><img src="{{ centro.logo.url }}" alt="{% translate 'Logo actual' %}" class="logo-centro rounded border"></p>
+  {% endif %}
+
+  {# multipart/form-data é necesario para subir o logo #}
+  <form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    {% include "_formulario.html" with form=form %}
+    <button type="submit" class="btn btn-bambi">{% translate "Gardar cambios" %}</button>
+  </form>
+</div>
+{% endblock %}

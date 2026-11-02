@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titulo %}{% translate "As miñas reservas" %} · Bambi{% endblock %}
+
+{% block contido %}
+<div class="container mt-4">
+  <h1 class="h3 mb-4">{% translate "As miñas reservas" %}</h1>
+
+  <section class="mb-5" aria-labelledby="titulo-activas">
+    <h2 id="titulo-activas" class="h5">{% translate "Activas" %}</h2>
+    {% if activas %}
+      <div class="row row-cols-1 row-cols-md-2 g-3">
+        {% for reserva in activas %}
+          <div class="col">
+            <article class="card h-100">
+              <div class="card-body">
+                <h3 class="h6 card-title">
+                  <a href="{% url 'reservas:detalle' reserva.pk %}">{{ reserva.exemplar.titulo }}</a>
+                </h3>
+                <p class="card-text small text-muted mb-2">{{ reserva.exemplar.autoria }} · {{ reserva.centro.nome }}</p>
+                <p class="card-text mb-3">
+                  {% translate "Recoller antes do" %} <strong>{{ reserva.vence_en|date:"j/m/Y H:i" }}</strong>
+                </p>
+                {% include "reservas/_aviso_cancelacion.html" %}
+                {% if reserva.pode_cancelarse %}
+                  <form method="post" action="{% url 'reservas:cancelar' reserva.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-outline-danger">{% translate "Cancelar" %}</button>
+                  </form>
+                {% endif %}
+              </div>
+            </article>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-muted">
+        {% translate "Non tes reservas activas." %}
+        <a href="{% url 'catalogo:buscar' %}">{% translate "Buscar un libro" %}</a>
+      </p>
+    {% endif %}
+  </section>
+
+  <section aria-labelledby="titulo-historial">
+    <h2 id="titulo-historial" class="h5">{% translate "Historial" %}</h2>
+    {% if historial %}
+      <div class="table-responsive">
+        <table class="table table-sm align-middle">
+          <thead>
+            <tr>
+              <th scope="col">{% translate "Libro" %}</th>
+              <th scope="col">{% translate "Centro" %}</th>
+              <th scope="col">{% translate "Data" %}</th>
+              <th scope="col">{% translate "Estado" %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for reserva in historial %}
+              <tr>
+                <td><a href="{% url 'reservas:detalle' reserva.pk %}">{{ reserva.exemplar.titulo }}</a></td>
+                <td>{{ reserva.centro.nome }}</td>
+                <td>{{ reserva.creado_en|date:"j/m/Y" }}</td>
+                <td>{% include "reservas/_estado.html" %}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p class="text-muted">{% translate "Aínda non hai reservas anteriores." %}</p>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

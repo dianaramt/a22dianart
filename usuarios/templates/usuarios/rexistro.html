@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titulo %}{% translate "Crear conta" %} · Bambi{% endblock %}
+
+{% block contido %}
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-sm-10 col-md-7 col-lg-5">
+      <h1 class="h3 mb-2">{% translate "Crear conta de lector" %}</h1>
+      <p class="text-muted">{% translate "Coa conta poderás reservar libros e recollelos no centro." %}</p>
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+        {% include "_formulario.html" with form=form %}
+        <button type="submit" class="btn btn-bambi w-100">{% translate "Crear conta" %}</button>
+      </form>
+
+      <p class="mt-3 text-center">
+        {% translate "Xa tes conta?" %}
+        <a href="{% url 'usuarios:entrar' %}{% if next %}?next={{ next|urlencode }}{% endif %}">{% translate "Iniciar sesión" %}</a>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -10,7 +10,77 @@ O obxectivo académico é desenvolver un prototipo funcional despregado con dato
 
 ## Execución/Posta en marcha
 
-Aínda non hai unha aplicación implementada nin un procedemento de instalación de momento.
+### Requisitos
+
+- Python 3.12 ou superior (desenvolvido con Python 3.14 e Django 6.1)
+- Git
+
+### Instalación en desenvolvemento
+
+Os comandos están escritos para Git Bash; en PowerShell substitúe `source .venv/Scripts/activate` por `.\.venv\Scripts\Activate.ps1`.
+
+```bash
+git clone <url-do-repositorio>
+cd a22dianart
+
+# Contorno virtual e dependencias
+python -m venv .venv
+source .venv/Scripts/activate        # Linux/macOS: source .venv/bin/activate
+pip install -r requirements.txt
+
+# Base de datos (SQLite en desenvolvemento)
+python manage.py migrate
+
+# Opcional: datos ficticios de demostración (centros, libros, usuarios e reservas)
+python manage.py cargar_demo
+
+# Servidor de desenvolvemento
+python manage.py runserver
+```
+
+A aplicación queda dispoñible en <http://127.0.0.1:8000/>.
+
+Para ter unha conta propia de superusuario (tamén dá acceso ao admin de Django en `/admin/`):
+
+```bash
+winpty python manage.py createsuperuser   # en Git Bash; noutros terminais, sen winpty
+```
+
+### Contas de demostración
+
+Despois de `python manage.py cargar_demo`, todas as contas teñen o contrasinal `Demo-Bambi-2026`:
+
+| Rol                     | Correo                         |
+| ----------------------- | ------------------------------ |
+| Superusuario            | `plataforma@demo.bambi.test`   |
+| Administrador de centro | `castineiros@demo.bambi.test`  |
+| Administrador de centro | `andaina@demo.bambi.test`      |
+| Lector                  | `lucia@demo.bambi.test`        |
+
+Para borrar só os datos de demostración: `python manage.py cargar_demo --borrar`.
+
+### Tests
+
+```bash
+python manage.py test
+```
+
+### Traducións
+
+Os textos escríbense en galego no código (`{% translate %}` nas plantillas e `_()` en Python) e tradúcense ao castelán e ao inglés en `locale/es` e `locale/en`. Tras engadir ou cambiar textos (precisa GNU gettext, incluído en Git for Windows; executar desde Git Bash):
+
+```bash
+python manage.py makemessages -l es -l en --ignore=".venv/*" --ignore="static/*"
+# completar as novas entradas msgstr en locale/*/LC_MESSAGES/django.po
+python manage.py compilemessages --ignore=".venv/*"
+```
+
+### Variables de contorno
+
+| Variable            | Uso                                                  | Valor por defecto           |
+| ------------------- | ---------------------------------------------------- | --------------------------- |
+| `DJANGO_SECRET_KEY` | Clave secreta de Django (obrigatoria en produción)   | Clave insegura de desenvolvemento |
+| `DJANGO_DEBUG`      | `True` ou `False`                                    | `True`                      |
 
 ## Uso
 

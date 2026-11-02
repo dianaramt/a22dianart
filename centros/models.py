@@ -1,6 +1,16 @@
 from django.conf import settings
+from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+# As cores insírense no CSS do escaparate: só se admite formato #rrggbb
+validar_cor = RegexValidator(r'^#[0-9a-fA-F]{6}$', _('Introduce unha cor en formato #rrggbb'))
+
+FAMILIAS_TIPOGRAFICAS = {
+    'sans': 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
+    'serif': 'Georgia, "Times New Roman", serif',
+    'mono': '"Courier New", monospace',
+}
 
 
 class Centro(models.Model):
@@ -28,8 +38,8 @@ class Centro(models.Model):
 
     # Personalización do escaparate
     logo = models.ImageField(_('logo'), upload_to='logos/', blank=True)
-    cor_principal = models.CharField(_('cor principal'), max_length=7, default='#2f5d50')
-    cor_secundaria = models.CharField(_('cor secundaria'), max_length=7, default='#f4efe6')
+    cor_principal = models.CharField(_('cor principal'), max_length=7, default='#2f5d50', validators=[validar_cor])
+    cor_secundaria = models.CharField(_('cor secundaria'), max_length=7, default='#f4efe6', validators=[validar_cor])
     tipografia = models.CharField(_('tipografía'), max_length=10, choices=Tipografia.choices, default=Tipografia.SANS)
 
     # Días que ten o lector para recoller unha reserva
@@ -56,3 +66,7 @@ class Centro(models.Model):
     @property
     def esta_activo(self):
         return self.estado == self.Estado.ACTIVO
+
+    @property
+    def familia_tipografica(self):
+        return FAMILIAS_TIPOGRAFICAS.get(self.tipografia, FAMILIAS_TIPOGRAFICAS['sans'])

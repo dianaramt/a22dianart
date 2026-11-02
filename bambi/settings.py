@@ -11,23 +11,46 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
 import os
+import sys
 from pathlib import Path
+
+from django.core.exceptions import ImproperlyConfigured
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Variables de contorno desde .env (se existe); as xa definidas no sistema teñen prioridade
+load_dotenv(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# En produción defínense por variables de contorno; os valores por defecto só valen para desenvolvemento
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-solo-para-desenvolvemento')
+# En produción todo se define por variables de contorno (ver doc/despregamento.md);
+# os valores por defecto só valen para desenvolvemento.
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '')
+if not SECRET_KEY:
+    if not DEBUG:
+        raise ImproperlyConfigured('Falta a variable de contorno DJANGO_SECRET_KEY')
+    SECRET_KEY = 'django-insecure-solo-para-desenvolvemento'
+
+# Dominios separados por comas, p. ex.: usuario.pythonanywhere.com
+ALLOWED_HOSTS = [h.strip() for h in os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',') if h.strip()]
+CSRF_TRUSTED_ORIGINS = [f'https://{h}' for h in ALLOWED_HOSTS]
+
+if not DEBUG:
+    # O HTTPS remátao o proxy do aloxamento: esta cabeceira indica a Django que a petición orixinal era segura
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = os.environ.get('DJANGO_SSL_REDIRECT', 'True') == 'True'
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    LANGUAGE_COOKIE_SECURE = True
 
 
 # Application definition
@@ -44,6 +67,7 @@ INSTALLED_APPS = [
     'centros',
     'catalogo',
     'reservas',
+    'panel',
 ]
 
 MIDDLEWARE = [
@@ -94,6 +118,19 @@ DATABASES = {
 
 # Modelo de usuario propio (definido antes da primeira migración)
 AUTH_USER_MODEL = 'usuarios.Usuario'
+
+# Nos tests úsase un hash rápido (inseguro): só afecta a `manage.py test`
+if len(sys.argv) > 1 and sys.argv[1] == 'test':
+    PASSWORD_HASHERS = ['django.contrib.auth.hashers.MD5PasswordHasher']
+
+# Regras de Bambi
+# Minutos que ten o lector para cancelar unha reserva despois de facela
+BAMBI_MINUTOS_CANCELACION = 5
+
+LOGIN_URL = 'usuarios:entrar'
+# Redirixe segundo o rol (ver usuarios.views.url_inicio)
+LOGIN_REDIRECT_URL = 'usuarios:inicio'
+LOGOUT_REDIRECT_URL = 'centros:portada'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -149,5 +186,21 @@ MEDIA_ROOT = BASE_DIR / 'media'
 MAILERS = {
     'default': {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
+    },
+}
+
+
+# Logging
+# Con DEBUG=False os erros só se enviarían por correo aos ADMINS; así quedan no
+# rexistro de erros do servidor (en PythonAnywhere: "Error log" da pestana Web)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {'class': 'logging.StreamHandler'},
+    },
+    'loggers': {
+        'django': {'handlers': ['console'], 'level': 'WARNING'},
     },
 }

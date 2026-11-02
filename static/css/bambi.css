@@ -1,0 +1,48 @@
+/* Estilos propios de Bambi (por riba de Bootstrap) */
+
+:root {
+  --bambi-principal: #2f5d50;
+  --bambi-secundaria: #f4efe6;
+}
+
+.bg-bambi {
+  background-color: var(--bambi-principal);
+}
+
+.btn-bambi {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--bambi-principal);
+  --bs-btn-border-color: var(--bambi-principal);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--bambi-principal);
+  --bs-btn-hover-border-color: var(--bambi-principal);
+  --bs-btn-active-bg: var(--bambi-principal);
+}
+
+.btn-bambi:hover {
+  filter: brightness(1.15);
+}
+
+.portada-heroe {
+  background-color: var(--bambi-secundaria);
+}
+
+.cabeceira-centro {
+  background-color: var(--bambi-secundaria);
+  border-bottom: 4px solid var(--bambi-principal);
+}
+
+.logo-centro {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  background-color: #fff;
+}
+
+/* Foco ben visible para navegación con teclado */
+a:focus-visible,
+button:focus-visible,
+.form-select:focus-visible {
+  outline: 3px solid #f0b429;
+  outline-offset: 2px;
+}

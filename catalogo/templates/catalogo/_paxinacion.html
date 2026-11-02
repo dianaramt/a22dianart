@@ -1,0 +1,21 @@
+{% load i18n paxinacion %}
+{# Mantén os filtros da URL (q, estado...) ao cambiar de páxina #}
+{% if paxina.has_other_pages %}
+  <nav aria-label="{% translate 'Páxinas de resultados' %}">
+    <ul class="pagination">
+      {% if paxina.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="{% url_paxina paxina.previous_page_number %}">{% translate "Anterior" %}</a>
+        </li>
+      {% endif %}
+      <li class="page-item active" aria-current="page">
+        <span class="page-link">{{ paxina.number }} / {{ paxina.paginator.num_pages }}</span>
+      </li>
+      {% if paxina.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="{% url_paxina paxina.next_page_number %}">{% translate "Seguinte" %}</a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}

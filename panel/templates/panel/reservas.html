@@ -1,0 +1,102 @@
+{% extends "panel/base_panel.html" %}
+{% load i18n %}
+
+{% block contido_panel %}
+<section class="mb-5" aria-labelledby="titulo-activas">
+  <h2 id="titulo-activas" class="h5">{% translate "Pendentes de recoller" %}</h2>
+  {% if activas %}
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th scope="col">{% translate "Libro" %}</th>
+            <th scope="col">{% translate "Lector" %}</th>
+            <th scope="col">{% translate "Recoller antes do" %}</th>
+            <th scope="col"><span class="visually-hidden">{% translate "Accións" %}</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for reserva in activas %}
+            <tr {% if reserva.vence_en < agora %}class="table-warning"{% endif %}>
+              <td>{{ reserva.exemplar.titulo }}<div class="small text-muted">{{ reserva.exemplar.autoria }}</div></td>
+              <td>{{ reserva.lector.nome_visible|default:"—" }}<div class="small text-muted">{{ reserva.lector.email }}</div></td>
+              <td>
+                {{ reserva.vence_en|date:"j/m/Y H:i" }}
+                {% if reserva.vence_en < agora %}<div class="small fw-semibold">{% translate "Prazo vencido" %}</div>{% endif %}
+              </td>
+              <td class="text-end">
+                <div class="d-inline-flex gap-1">
+                  <form method="post" action="{% url 'panel:accion_reserva' centro.slug reserva.pk 'recollida' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-success">{% translate "Recollida" %}</button>
+                  </form>
+                  <form method="post" action="{% url 'panel:accion_reserva' centro.slug reserva.pk 'non_recollida' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-outline-danger">{% translate "Non recollida" %}</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="text-muted">{% translate "Non hai reservas pendentes." %}</p>
+  {% endif %}
+</section>
+
+{% if centro.tipo == 'biblioteca' %}
+  <section class="mb-5" aria-labelledby="titulo-prestamos">
+    <h2 id="titulo-prestamos" class="h5">{% translate "Préstamos en curso" %}</h2>
+    {% if prestamos %}
+      <ul class="list-group">
+        {% for reserva in prestamos %}
+          <li class="list-group-item d-flex justify-content-between align-items-center gap-2">
+            <div>
+              {{ reserva.exemplar.titulo }}
+              <div class="small text-muted">{{ reserva.lector }} · {% translate "desde o" %} {{ reserva.actualizado_en|date:"j/m/Y" }}</div>
+            </div>
+            <form method="post" action="{% url 'panel:accion_reserva' centro.slug reserva.pk 'devolta' %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-sm btn-outline-primary">{% translate "Rexistrar devolución" %}</button>
+            </form>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="text-muted">{% translate "Non hai préstamos en curso." %}</p>
+    {% endif %}
+  </section>
+{% endif %}
+
+<section aria-labelledby="titulo-recentes">
+  <h2 id="titulo-recentes" class="h5">{% translate "Últimos movementos" %}</h2>
+  {% if recentes %}
+    <div class="table-responsive">
+      <table class="table table-sm align-middle">
+        <thead>
+          <tr>
+            <th scope="col">{% translate "Libro" %}</th>
+            <th scope="col">{% translate "Lector" %}</th>
+            <th scope="col">{% translate "Data" %}</th>
+            <th scope="col">{% translate "Estado" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for reserva in recentes %}
+            <tr>
+              <td>{{ reserva.exemplar.titulo }}</td>
+              <td>{{ reserva.lector }}</td>
+              <td>{{ reserva.actualizado_en|date:"j/m/Y H:i" }}</td>
+              <td>{% include "reservas/_estado.html" %}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="text-muted">{% translate "Aínda non hai movementos." %}</p>
+  {% endif %}
+</section>
+{% endblock %}

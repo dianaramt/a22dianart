@@ -1,0 +1,43 @@
+{% extends "panel/base_panel.html" %}
+{% load i18n %}
+
+{% block contido_panel %}
+<div class="row row-cols-2 row-cols-md-4 g-3 mb-4">
+  <div class="col">
+    <div class="card text-center h-100"><div class="card-body">
+      <p class="display-6 mb-0">{{ total_exemplares }}</p>
+      <p class="small text-muted mb-0">{% translate "Libros no catálogo" %}</p>
+    </div></div>
+  </div>
+  <div class="col">
+    <div class="card text-center h-100"><div class="card-body">
+      <p class="display-6 mb-0">{{ total_disponibles }}</p>
+      <p class="small text-muted mb-0">{% translate "Dispoñibles" %}</p>
+    </div></div>
+  </div>
+  <div class="col">
+    <div class="card text-center h-100"><div class="card-body">
+      <p class="display-6 mb-0">{{ total_reservas }}</p>
+      <p class="small text-muted mb-0">{% translate "Reservas activas" %}</p>
+    </div></div>
+  </div>
+  <div class="col">
+    <div class="card text-center h-100"><div class="card-body">
+      <p class="display-6 mb-0">{{ total_prestados }}</p>
+      <p class="small text-muted mb-0">{% translate "Prestados" %}</p>
+    </div></div>
+  </div>
+</div>
+
+{% if total_vencidas %}
+  <div class="alert alert-warning">
+    {% blocktranslate count total=total_vencidas %}Hai {{ total }} reserva coa data de recollida xa pasada.{% plural %}Hai {{ total }} reservas coa data de recollida xa pasada.{% endblocktranslate %}
+    <a href="{% url 'panel:reservas' centro.slug %}" class="alert-link">{% translate "Revisar reservas" %}</a>
+  </div>
+{% endif %}
+
+<div class="d-flex flex-wrap gap-2">
+  <a href="{% url 'panel:exemplar_novo' centro.slug %}" class="btn btn-bambi">{% translate "Engadir libro" %}</a>
+  <a href="{% url 'panel:reservas' centro.slug %}" class="btn btn-outline-secondary">{% translate "Atender reservas" %}</a>
+</div>
+{% endblock %}

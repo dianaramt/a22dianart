@@ -3,6 +3,8 @@ from django.utils.translation import gettext_lazy as _
 
 from centros.models import Centro
 
+from .busca import normalizar
+
 
 class Exemplar(models.Model):
     """Unha copia física dun libro nun centro. Tres copias = tres exemplares."""
@@ -22,6 +24,8 @@ class Exemplar(models.Model):
     descricion = models.TextField(_('descrición'), blank=True)
     estado = models.CharField(_('estado'), max_length=20, choices=Estado.choices, default=Estado.DISPONIBLE)
     creado_en = models.DateTimeField(_('creado en'), auto_now_add=True)
+    # Título, autoría e ISBN normalizados (ver busca.py); calcúlase ao gardar
+    texto_busca = models.TextField(editable=False, default='')
 
     class Meta:
         verbose_name = _('exemplar')
@@ -31,6 +35,12 @@ class Exemplar(models.Model):
 
     def __str__(self):
         return f'{self.titulo} ({self.centro})'
+
+    def save(self, *args, **kwargs):
+        # O ISBN gárdase sen guións nin espazos para que sexa uniforme
+        self.isbn = self.isbn.replace('-', '').replace(' ', '').upper()
+        self.texto_busca = normalizar(f'{self.titulo} {self.autoria} {self.isbn}')
+        super().save(*args, **kwargs)
 
     @property
     def esta_disponible(self):

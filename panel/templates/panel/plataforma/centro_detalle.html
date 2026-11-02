@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titulo %}{{ centro.nome }} · {% translate "Panel da plataforma" %} · Bambi{% endblock %}
+
+{% block contido %}
+<div class="container mt-4">
+  <nav aria-label="{% translate 'Ruta de navegación' %}">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'plataforma:inicio' %}?estado={{ centro.estado }}">{% translate "Panel da plataforma" %}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ centro.nome }}</li>
+    </ol>
+  </nav>
+
+  <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-4">
+    <div>
+      <h1 class="h3 mb-1">{{ centro.nome }}</h1>
+      <p class="mb-0 text-muted">
+        {{ centro.get_tipo_display }}{% if centro.localizacion %} · {{ centro.localizacion }}{% endif %} ·
+        <span class="badge {% if centro.estado == 'activo' %}text-bg-success{% elif centro.estado == 'pendente' %}text-bg-warning{% else %}text-bg-secondary{% endif %}">{{ centro.get_estado_display }}</span>
+      </p>
+    </div>
+    {% if centro.esta_activo %}
+      <a href="{% url 'centros:escaparate' centro.slug %}" class="btn btn-sm btn-outline-secondary">{% translate "Ver escaparate" %}</a>
+    {% endif %}
+  </div>
+
+  <div class="row g-4">
+    <div class="col-lg-5">
+      <section class="card mb-4" aria-labelledby="titulo-estado">
+        <div class="card-body">
+          <h2 id="titulo-estado" class="h5">{% translate "Estado" %}</h2>
+          <p class="small text-muted">
+            {% blocktranslate count total=num_exemplares %}{{ total }} libro no catálogo{% plural %}{{ total }} libros no catálogo{% endblocktranslate %}
+            · {% blocktranslate count total=reservas_activas %}{{ total }} reserva activa{% plural %}{{ total }} reservas activas{% endblocktranslate %}
+          </p>
+          <div class="d-flex flex-wrap gap-2">
+            {% if centro.estado != 'activo' %}
+              <form method="post" action="{% url 'plataforma:centro_estado' centro.pk 'activo' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">{% translate "Activar" %}</button>
+              </form>
+            {% endif %}
+            {% if centro.estado != 'desactivado' %}
+              <form method="post" action="{% url 'plataforma:centro_estado' centro.pk 'desactivado' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-danger">{% translate "Desactivar" %}</button>
+              </form>
+            {% endif %}
+            {% if centro.estado == 'desactivado' %}
+              <form method="post" action="{% url 'plataforma:centro_estado' centro.pk 'pendente' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-secondary">{% translate "Volver a pendente" %}</button>
+              </form>
+            {% endif %}
+          </div>
+          {% if centro.estado == 'activo' and reservas_activas %}
+            <p class="small text-warning-emphasis mt-3 mb-0">
+              {% translate "Se o desactivas, o escaparate e o panel deixan de estar accesibles, pero as reservas activas non se cancelan automaticamente." %}
+            </p>
+          {% endif %}
+        </div>
+      </section>
+
+      {% if centro.descricion %}
+        <section class="mb-4">
+          <h2 class="h6">{% translate "Descrición" %}</h2>
+          <p class="small">{{ centro.descricion|linebreaksbr }}</p>
+        </section>
+      {% endif %}
+    </div>
+
+    <div class="col-lg-7">
+      <section class="mb-4" aria-labelledby="titulo-admins">
+        <h2 id="titulo-admins" class="h5">{% translate "Administradores" %}</h2>
+        {% if administradores %}
+          <ul class="list-group mb-3">
+            {% for admin in administradores %}
+              <li class="list-group-item d-flex justify-content-between align-items-center gap-2">
+                <div>{{ admin.nome_visible|default:admin.email }}<div class="small text-muted">{{ admin.email }}</div></div>
+                <form method="post" action="{% url 'plataforma:quitar_admin' centro.pk admin.pk %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-outline-danger">
+                    {% translate "Quitar" %}<span class="visually-hidden"> {{ admin.email }}</span>
+                  </button>
+                </form>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <div class="alert alert-warning">{% translate "Este centro non ten administrador. Asigna un antes de activalo." %}</div>
+        {% endif %}
+
+        <details {% if form_admin.errors or not administradores %}open{% endif %} class="card">
+          <summary class="card-header">{% translate "Engadir administrador" %}</summary>
+          <div class="card-body">
+            <form method="post" novalidate>
+              {% csrf_token %}
+              {% include "_formulario.html" with form=form_admin %}
+              <button type="submit" class="btn btn-bambi">{% translate "Engadir" %}</button>
+            </form>
+          </div>
+        </details>
+      </section>
+    </div>
+  </div>
+</div>
+{% endblock %}

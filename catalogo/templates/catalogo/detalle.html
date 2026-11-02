@@ -1,0 +1,51 @@
+{% extends "centros/base_centro.html" %}
+{% load i18n %}
+
+{% block titulo %}{{ exemplar.titulo }} · {{ centro.nome }} · Bambi{% endblock %}
+
+{% block contido_centro %}
+<nav aria-label="{% translate 'Ruta de navegación' %}">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'centros:escaparate' centro.slug %}">{% translate "Catálogo" %}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ exemplar.titulo }}</li>
+  </ol>
+</nav>
+
+<article class="col-lg-8">
+  <h2 class="h3">{{ exemplar.titulo }}</h2>
+  <p class="lead mb-2">{{ exemplar.autoria }}</p>
+  <p class="mb-3">{% include "catalogo/_estado.html" %}</p>
+
+  <dl class="row">
+    {% if exemplar.isbn %}
+      <dt class="col-sm-3">ISBN</dt>
+      <dd class="col-sm-9">{{ exemplar.isbn }}</dd>
+    {% endif %}
+    <dt class="col-sm-3">{% translate "Centro" %}</dt>
+    <dd class="col-sm-9">{{ centro.nome }}{% if centro.localizacion %} · {{ centro.localizacion }}{% endif %}</dd>
+  </dl>
+
+  {% if exemplar.descricion %}
+    <p>{{ exemplar.descricion|linebreaksbr }}</p>
+  {% endif %}
+
+  <div class="mt-4">
+    {% if reserva_propia %}
+      <div class="alert alert-info">
+        {% translate "Xa tes este libro reservado." %}
+        <a href="{% url 'reservas:detalle' reserva_propia.pk %}" class="alert-link">{% translate "Ver a reserva" %}</a>
+      </div>
+    {% elif exemplar.esta_disponible %}
+      {% if not user.is_authenticated or user.es_lector %}
+        {# Sen sesión, login_required leva a entrar e despois volve aquí #}
+        <a href="{% url 'reservas:reservar' exemplar.pk %}" class="btn btn-bambi btn-lg">{% translate "Reservar" %}</a>
+        {% if not user.is_authenticated %}
+          <p class="small text-muted mt-2">{% translate "Necesitas unha conta de lector para reservar." %}</p>
+        {% endif %}
+      {% endif %}
+    {% else %}
+      <p class="text-muted">{% translate "Este exemplar non se pode reservar agora mesmo." %}</p>
+    {% endif %}
+  </div>
+</article>
+{% endblock %}

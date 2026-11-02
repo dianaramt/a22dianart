@@ -1,0 +1,43 @@
+{% extends "centros/base_centro.html" %}
+{% load i18n %}
+
+{% block titulo %}{% translate "Confirmar reserva" %} · Bambi{% endblock %}
+
+{% block contido_centro %}
+<div class="col-lg-7">
+  <h2 class="h3 mb-3">{% translate "Confirmar reserva" %}</h2>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <h3 class="h5 card-title">{{ exemplar.titulo }}</h3>
+      <p class="card-text text-muted">{{ exemplar.autoria }}</p>
+      <dl class="row mb-0">
+        <dt class="col-sm-4">{% translate "Recollida en" %}</dt>
+        <dd class="col-sm-8">{{ centro.nome }}{% if centro.localizacion %}<br>{{ centro.localizacion }}{% endif %}</dd>
+        <dt class="col-sm-4">{% translate "Prazo" %}</dt>
+        <dd class="col-sm-8">
+          {% blocktranslate count dias=centro.dias_reserva %}Tes {{ dias }} día para recollelo.{% plural %}Tes {{ dias }} días para recollelo.{% endblocktranslate %}
+        </dd>
+      </dl>
+    </div>
+  </div>
+
+  <p class="small text-muted">
+    {% if centro.tipo == 'biblioteca' %}
+      {% translate "O préstamo formalízase no centro ao recoller o libro." %}
+    {% else %}
+      {% translate "O pagamento faise na libraría ao recoller o libro. Bambi non cobra nada." %}
+    {% endif %}
+  </p>
+
+  <p class="small text-muted">
+    {% blocktranslate count minutos=minutos_cancelacion %}Só poderás cancelar a reserva durante o primeiro minuto despois de confirmala.{% plural %}Só poderás cancelar a reserva durante os {{ minutos }} primeiros minutos despois de confirmala.{% endblocktranslate %}
+  </p>
+
+  <form method="post" class="d-flex gap-2">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-bambi">{% translate "Confirmar reserva" %}</button>
+    <a href="{% url 'catalogo:detalle' centro.slug exemplar.pk %}" class="btn btn-outline-secondary">{% translate "Volver" %}</a>
+  </form>
+</div>
+{% endblock %}

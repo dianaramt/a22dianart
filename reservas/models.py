@@ -1,6 +1,9 @@
+from datetime import timedelta
+
 from django.conf import settings
 from django.db import models
 from django.db.models import Q
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from catalogo.models import Exemplar
@@ -45,3 +48,12 @@ class Reserva(models.Model):
     @property
     def centro(self):
         return self.exemplar.centro
+
+    @property
+    def cancelable_ata(self):
+        """Momento ata o que o lector pode cancelar a reserva."""
+        return self.creado_en + timedelta(minutes=settings.BAMBI_MINUTOS_CANCELACION)
+
+    @property
+    def pode_cancelarse(self):
+        return self.estado == self.Estado.ACTIVA and timezone.now() <= self.cancelable_ata

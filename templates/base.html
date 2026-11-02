@@ -1,0 +1,116 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Bambi{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/bambi.css' %}">
+  {% block estilos %}{% endblock %}
+</head>
+<body class="d-flex flex-column min-vh-100">
+  <a class="visually-hidden-focusable" href="#contido">{% translate "Saltar ao contido" %}</a>
+
+  <header>
+    <nav class="navbar navbar-expand-md navbar-dark bg-bambi">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="{% url 'centros:portada' %}">Bambi</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu-principal"
+                aria-controls="menu-principal" aria-expanded="false" aria-label="{% translate 'Abrir menú' %}">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menu-principal">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'centros:portada' %}">{% translate "Inicio" %}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'catalogo:buscar' %}">{% translate "Buscar" %}</a>
+            </li>
+            {% if user.is_authenticated and user.es_lector %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'reservas:area_persoal' %}">{% translate "As miñas reservas" %}</a>
+              </li>
+            {% elif user.is_authenticated and user.es_admin_centro %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'panel:inicio' %}">{% translate "Panel do centro" %}</a>
+              </li>
+            {% elif user.is_authenticated and user.es_superusuario %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'plataforma:inicio' %}">{% translate "Panel da plataforma" %}</a>
+              </li>
+            {% endif %}
+          </ul>
+
+          <ul class="navbar-nav me-md-3">
+            {% if user.is_authenticated %}
+              <li class="nav-item dropdown">
+                <button type="button" class="nav-link dropdown-toggle btn btn-link" data-bs-toggle="dropdown" aria-expanded="false">
+                  {{ user }}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><span class="dropdown-item-text small text-muted">{{ user.get_rol_display }}</span></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li>
+                    {# Pechar sesión sempre por POST, para que un enlace externo non poida facelo #}
+                    <form action="{% url 'usuarios:sair' %}" method="post">
+                      {% csrf_token %}
+                      <button type="submit" class="dropdown-item">{% translate "Pechar sesión" %}</button>
+                    </form>
+                  </li>
+                </ul>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'usuarios:entrar' %}">{% translate "Iniciar sesión" %}</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'usuarios:rexistro' %}">{% translate "Crear conta" %}</a>
+              </li>
+            {% endif %}
+          </ul>
+
+          {# Selector de idioma: envía o formulario á vista set_language de Django #}
+          <form action="{% url 'set_language' %}" method="post" class="d-flex">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ request.get_full_path }}">
+            <label for="idioma" class="visually-hidden">{% translate "Idioma" %}</label>
+            <select name="language" id="idioma" class="form-select form-select-sm" onchange="this.form.submit()">
+              {% get_available_languages as LANGUAGES %}
+              {% for codigo, nome in LANGUAGES %}
+                <option value="{{ codigo }}" {% if codigo == LANGUAGE_CODE %}selected{% endif %}>{{ nome }}</option>
+              {% endfor %}
+            </select>
+            <noscript><button type="submit" class="btn btn-sm btn-light ms-2">{% translate "Cambiar" %}</button></noscript>
+          </form>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="contido" class="flex-grow-1">
+    {% if messages %}
+      <div class="container mt-3">
+        {% for message in messages %}
+          <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags|default:'info' }}{% endif %}" role="alert">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% block contido %}{% endblock %}
+  </main>
+
+  <footer class="bg-light border-top py-3 mt-5">
+    <div class="container small text-muted">
+      Bambi · Books, Archives, Media &amp; Bibliographic Information
+    </div>
+  </footer>
+
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

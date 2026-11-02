@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titulo %}{% translate "Buscar libros" %} · Bambi{% endblock %}
+
+{% block contido %}
+<div class="container mt-4">
+  <h1 class="h3 mb-3">{% translate "Buscar libros" %}</h1>
+  {% translate "Buscar en todos os centros" as etiqueta %}
+  {% url 'catalogo:buscar' as accion %}
+  {% include "catalogo/_formulario_busca.html" with accion=accion etiqueta=etiqueta %}
+
+  {% if consulta %}
+    <p class="text-muted">
+      <output>{% blocktranslate count total=paxina.paginator.count with consulta=consulta %}{{ total }} resultado para «{{ consulta }}»{% plural %}{{ total }} resultados para «{{ consulta }}»{% endblocktranslate %}</output>
+    </p>
+
+    {% if paxina.object_list %}
+      <ul class="list-group mb-4">
+        {% for exemplar in paxina %}
+          <li class="list-group-item d-flex justify-content-between align-items-start gap-3">
+            <div>
+              <a href="{% url 'catalogo:detalle' exemplar.centro.slug exemplar.pk %}" class="fw-semibold">{{ exemplar.titulo }}</a>
+              <div class="small text-muted">{{ exemplar.autoria }}</div>
+              <div class="small">
+                <a href="{% url 'centros:escaparate' exemplar.centro.slug %}" class="link-secondary">{{ exemplar.centro.nome }}</a>
+                {% if exemplar.centro.localizacion %} · {{ exemplar.centro.localizacion }}{% endif %}
+              </div>
+            </div>
+            {% include "catalogo/_estado.html" %}
+          </li>
+        {% endfor %}
+      </ul>
+      {% include "catalogo/_paxinacion.html" %}
+    {% endif %}
+  {% endif %}
+</div>
+{% endblock %}

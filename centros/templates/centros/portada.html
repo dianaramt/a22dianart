@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titulo %}Bambi · {% translate "Librarías e bibliotecas da túa contorna" %}{% endblock %}
+
+{% block contido %}
+<section class="portada-heroe py-5 mb-4">
+  <div class="container">
+    <h1 class="display-5 fw-bold">{% translate "Atopa o teu próximo libro preto de ti" %}</h1>
+    <p class="lead col-lg-8">
+      {% translate "Consulta o catálogo das librarías e bibliotecas da túa contorna, comproba se o libro está dispoñible e resérvao para recollelo en persoa." %}
+    </p>
+    <div class="col-lg-8">
+      {% translate "Buscar en todos os centros" as etiqueta %}
+      {% url 'catalogo:buscar' as accion %}
+      {% include "catalogo/_formulario_busca.html" with accion=accion etiqueta=etiqueta %}
+    </div>
+  </div>
+</section>
+
+<section class="container" aria-labelledby="titulo-centros">
+  <h2 id="titulo-centros" class="h3 mb-3">{% translate "Centros" %}</h2>
+
+  {% if centros %}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+      {% for centro in centros %}
+        <div class="col">
+          <article class="card h-100 shadow-sm">
+            <div class="card-body">
+              <span class="badge {% if centro.tipo == 'biblioteca' %}text-bg-success{% else %}text-bg-primary{% endif %} mb-2">
+                {{ centro.get_tipo_display }}
+              </span>
+              <h3 class="h5 card-title">
+                {# stretched-link fai que toda a tarxeta sexa clicable #}
+                <a href="{% url 'centros:escaparate' centro.slug %}" class="stretched-link link-body-emphasis text-decoration-none">{{ centro.nome }}</a>
+              </h3>
+              {% if centro.localizacion %}
+                <p class="card-text text-muted small mb-2">{{ centro.localizacion }}</p>
+              {% endif %}
+              {% if centro.descricion %}
+                <p class="card-text">{{ centro.descricion|truncatewords:25 }}</p>
+              {% endif %}
+            </div>
+          </article>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-muted">{% translate "Aínda non hai centros dispoñibles." %}</p>
+  {% endif %}
+</section>
+{% endblock %}

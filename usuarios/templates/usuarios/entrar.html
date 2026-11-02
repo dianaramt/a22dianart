@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titulo %}{% translate "Iniciar sesión" %} · Bambi{% endblock %}
+
+{% block contido %}
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-sm-10 col-md-7 col-lg-5">
+      <h1 class="h3 mb-3">{% translate "Iniciar sesión" %}</h1>
+
+      {% if next and not user.is_authenticated %}
+        <p class="text-muted">{% translate "Inicia sesión para continuar." %}</p>
+      {% endif %}
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+        {% include "_formulario.html" with form=form %}
+        <button type="submit" class="btn btn-bambi w-100">{% translate "Entrar" %}</button>
+      </form>
+
+      <p class="mt-3 text-center">
+        {% translate "Aínda non tes conta?" %}
+        <a href="{% url 'usuarios:rexistro' %}{% if next %}?next={{ next|urlencode }}{% endif %}">{% translate "Crear unha conta" %}</a>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

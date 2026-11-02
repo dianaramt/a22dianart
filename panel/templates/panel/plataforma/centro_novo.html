@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titulo %}{% translate "Dar de alta un centro" %} · Bambi{% endblock %}
+
+{% block contido %}
+<div class="container mt-4">
+  <nav aria-label="{% translate 'Ruta de navegación' %}">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'plataforma:inicio' %}">{% translate "Panel da plataforma" %}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{% translate "Novo centro" %}</li>
+    </ol>
+  </nav>
+
+  <h1 class="h3 mb-3">{% translate "Dar de alta un centro" %}</h1>
+  <p class="text-muted col-lg-8">
+    {% translate "Antes de dar de alta o centro, comproba a documentación que acredita a súa existencia. O centro créase como «Pendente» e non será público ata que o actives." %}
+  </p>
+
+  <form method="post" novalidate class="col-lg-8">
+    {% csrf_token %}
+    <fieldset class="mb-4">
+      <legend class="h5">{% translate "Datos do centro" %}</legend>
+      {% include "_formulario.html" with form=form %}
+    </fieldset>
+    <fieldset class="mb-4">
+      <legend class="h5">{% translate "Primeiro administrador" %}</legend>
+      <p class="small text-muted">{% translate "Se o correo xa ten unha conta de administrador, non fai falta contrasinal." %}</p>
+      {% include "_formulario.html" with form=form_admin %}
+    </fieldset>
+    <div class="d-flex gap-2">
+      <button type="submit" class="btn btn-bambi">{% translate "Crear centro" %}</button>
+      <a href="{% url 'plataforma:inicio' %}" class="btn btn-outline-secondary">{% translate "Cancelar" %}</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

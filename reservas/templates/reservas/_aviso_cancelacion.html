@@ -1,0 +1,11 @@
+{% load i18n %}
+{# Informa de ata cando se pode cancelar unha reserva activa. Uso: {% include "reservas/_aviso_cancelacion.html" with reserva=r %} #}
+{% if reserva.pode_cancelarse %}
+  <p class="small text-muted mb-2">
+    {% blocktranslate with hora=reserva.cancelable_ata|time:"H:i" %}Podes cancelala ata as {{ hora }}.{% endblocktranslate %}
+  </p>
+{% else %}
+  <p class="small text-muted mb-2">
+    {% translate "Xa non se pode cancelar. Se finalmente non vas recollela, avisa ao centro." %}
+  </p>
+{% endif %}

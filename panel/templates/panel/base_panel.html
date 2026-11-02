@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titulo %}{% translate "Panel" %} · {{ centro.nome }} · Bambi{% endblock %}
+
+{% block contido %}
+<div class="container mt-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <div>
+      <p class="small text-muted mb-0">{% translate "Panel do centro" %}</p>
+      <h1 class="h3 mb-0">{{ centro.nome }}</h1>
+    </div>
+    {% if centro.esta_activo %}
+      <a href="{% url 'centros:escaparate' centro.slug %}" class="btn btn-sm btn-outline-secondary">{% translate "Ver escaparate público" %}</a>
+    {% endif %}
+  </div>
+
+  {% if not centro.esta_activo %}
+    <div class="alert alert-warning">
+      {% translate "O centro aínda non está activo: podes preparar o catálogo, pero o escaparate non é público ata que a plataforma o active." %}
+    </div>
+  {% endif %}
+
+  {% url 'panel:resumo' centro.slug as url_resumo %}
+  {% url 'panel:catalogo' centro.slug as url_catalogo %}
+  {% url 'panel:reservas' centro.slug as url_reservas %}
+  {% url 'panel:escaparate' centro.slug as url_escaparate %}
+  <nav aria-label="{% translate 'Seccións do panel' %}">
+    <ul class="nav nav-tabs mb-4">
+      <li class="nav-item">
+        <a class="nav-link {% if request.path == url_resumo %}active{% endif %}" {% if request.path == url_resumo %}aria-current="page"{% endif %} href="{{ url_resumo }}">{% translate "Resumo" %}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if url_catalogo in request.path %}active{% endif %}" {% if url_catalogo in request.path %}aria-current="page"{% endif %} href="{{ url_catalogo }}">{% translate "Catálogo" %}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if url_reservas in request.path %}active{% endif %}" {% if url_reservas in request.path %}aria-current="page"{% endif %} href="{{ url_reservas }}">{% translate "Reservas" %}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if request.path == url_escaparate %}active{% endif %}" {% if request.path == url_escaparate %}aria-current="page"{% endif %} href="{{ url_escaparate }}">{% translate "Escaparate" %}</a>
+      </li>
+    </ul>
+  </nav>
+
+  {% block contido_panel %}{% endblock %}
+</div>
+{% endblock %}

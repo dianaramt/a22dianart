@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titulo %}{% translate "Panel da plataforma" %} · Bambi{% endblock %}
+
+{% block contido %}
+<div class="container mt-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <div>
+      <h1 class="h3 mb-0">{% translate "Panel da plataforma" %}</h1>
+      <p class="small text-muted mb-0">
+        {% blocktranslate count total=total_lectores %}{{ total }} lector rexistrado{% plural %}{{ total }} lectores rexistrados{% endblocktranslate %}
+      </p>
+    </div>
+    <a href="{% url 'plataforma:centro_novo' %}" class="btn btn-bambi">{% translate "Dar de alta un centro" %}</a>
+  </div>
+
+  <nav aria-label="{% translate 'Centros por estado' %}">
+    <ul class="nav nav-tabs mb-3">
+      {% for valor, nome, total in pestanas %}
+        <li class="nav-item">
+          <a class="nav-link {% if valor == estado %}active{% endif %}" {% if valor == estado %}aria-current="page"{% endif %} href="?estado={{ valor }}">
+            {{ nome }} <span class="badge text-bg-light border">{{ total }}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+
+  {% if centros %}
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th scope="col">{% translate "Centro" %}</th>
+            <th scope="col">{% translate "Tipo" %}</th>
+            <th scope="col">{% translate "Administradores" %}</th>
+            <th scope="col">{% translate "Libros" %}</th>
+            <th scope="col">{% translate "Alta" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for centro in centros %}
+            <tr>
+              <td>
+                <a href="{% url 'plataforma:centro' centro.pk %}" class="fw-semibold">{{ centro.nome }}</a>
+                {% if centro.localizacion %}<div class="small text-muted">{{ centro.localizacion }}</div>{% endif %}
+              </td>
+              <td>{{ centro.get_tipo_display }}</td>
+              <td>{% if centro.num_admins %}{{ centro.num_admins }}{% else %}<span class="text-danger">{% translate "Ningún" %}</span>{% endif %}</td>
+              <td>{{ centro.num_exemplares }}</td>
+              <td class="small">{{ centro.creado_en|date:"j/m/Y" }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="text-muted">{% translate "Non hai centros neste estado." %}</p>
+  {% endif %}
+</div>
+{% endblock %}
