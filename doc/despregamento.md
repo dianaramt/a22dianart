@@ -16,7 +16,7 @@ cd ~
 git clone https://gitlab.iessanclemente.net/dawd/a22dianart.git
 ```
 
-> As contas gratuítas só poden acceder a algúns sitios de Internet (lista branca). Se o `git clone` falla, sobe o proxecto nun `.zip` desde a pestana **Files** e descomprímeo con `unzip a22dianart.zip -d ~`.
+> As contas gratuítas só poden acceder a algúns sitios de Internet (lista branca). Se o `git clone` falla, xera o `.zip` no teu ordenador con `git archive --format=zip --prefix=a22dianart/ -o a22dianart.zip main`, súbeo desde a pestana **Files** e descomprímeo con `unzip a22dianart.zip -d ~`.
 
 ## 2. Contorno virtual e dependencias
 
@@ -53,6 +53,8 @@ python manage.py collectstatic --noinput
 python manage.py createsuperuser
 python manage.py cargar_demo        # opcional: datos de demostración
 ```
+
+> `cargar_demo` crea un superusuario e outras contas de demostración. En produción exixe definir no `.env` un contrasinal propio e longo: `BAMBI_DEMO_CONTRASINAL=...`. Non uses o contrasinal de desenvolvemento do README nunha web pública.
 
 ## 5. Crear a aplicación web
 

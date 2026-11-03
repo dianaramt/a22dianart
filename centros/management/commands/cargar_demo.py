@@ -3,7 +3,10 @@
 Pódese executar varias veces: primeiro borra os datos de demo anteriores (só eses).
 """
 
-from django.core.management.base import BaseCommand
+import os
+
+from django.conf import settings
+from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 
 from catalogo.models import Exemplar
@@ -13,7 +16,8 @@ from reservas.servizos import cancelar_reserva, crear_reserva, marcar_recollida
 from usuarios.models import Usuario
 
 DOMINIO = '@demo.bambi.test'
-CONTRASINAL = 'Demo-Bambi-2026'
+# Só para desenvolvemento: en produción defínese BAMBI_DEMO_CONTRASINAL (ver doc/despregamento.md)
+CONTRASINAL_DESENVOLVEMENTO = 'Demo-Bambi-2026'
 
 CENTROS = [
     {
@@ -57,6 +61,16 @@ CENTROS = [
 LECTORES = [('lucia', 'Lucía'), ('martin', 'Martín'), ('noa', 'Noa')]
 
 
+def contrasinal_demo():
+    contrasinal = os.environ.get('BAMBI_DEMO_CONTRASINAL', '')
+    if contrasinal:
+        return contrasinal
+    # O contrasinal de desenvolvemento está no repositorio: nunca debe chegar a unha web pública
+    if settings.DEBUG:
+        return CONTRASINAL_DESENVOLVEMENTO
+    raise CommandError('Falta a variable de contorno BAMBI_DEMO_CONTRASINAL')
+
+
 class Command(BaseCommand):
     help = 'Carga (ou borra con --borrar) os datos ficticios de demostración.'
 
@@ -65,11 +79,13 @@ class Command(BaseCommand):
 
     @transaction.atomic
     def handle(self, *args, **opcions):
-        self.borrar()
         if opcions['borrar']:
+            self.borrar()
             self.stdout.write(self.style.SUCCESS('Datos de demostración borrados.'))
             return
-        self.cargar()
+        contrasinal = contrasinal_demo()
+        self.borrar()
+        self.cargar(contrasinal)
 
     def borrar(self):
         slugs = [c['slug'] for c in CENTROS]
@@ -80,8 +96,8 @@ class Command(BaseCommand):
         Centro.objects.filter(slug__in=slugs).delete()
         Usuario.objects.filter(email__endswith=DOMINIO).delete()
 
-    def cargar(self):
-        Usuario.objects.create_superuser(f'plataforma{DOMINIO}', CONTRASINAL, nome_visible='Plataforma Bambi')
+    def cargar(self, contrasinal):
+        Usuario.objects.create_superuser(f'plataforma{DOMINIO}', contrasinal, nome_visible='Plataforma Bambi')
 
         centros = {}
         for datos in CENTROS:
@@ -89,7 +105,7 @@ class Command(BaseCommand):
             libros, admin = datos.pop('libros'), datos.pop('admin')
             centro = Centro.objects.create(**datos)
             usuario = Usuario.objects.create_user(
-                f'{admin}{DOMINIO}', CONTRASINAL, rol=Usuario.Rol.ADMIN_CENTRO, nome_visible=f'Admin {centro.nome}'
+                f'{admin}{DOMINIO}', contrasinal, rol=Usuario.Rol.ADMIN_CENTRO, nome_visible=f'Admin {centro.nome}'
             )
             centro.administradores.add(usuario)
             for titulo, autoria in libros:
@@ -100,7 +116,7 @@ class Command(BaseCommand):
         Exemplar.objects.create(centro=centros['biblioteca-os-castineiros'], titulo='Follas novas', autoria='Rosalía de Castro')
 
         lectores = {
-            nome: Usuario.objects.create_user(f'{nome}{DOMINIO}', CONTRASINAL, nome_visible=visible)
+            nome: Usuario.objects.create_user(f'{nome}{DOMINIO}', contrasinal, nome_visible=visible)
             for nome, visible in LECTORES
         }
 
@@ -118,7 +134,7 @@ class Command(BaseCommand):
         cancelar_reserva(lectores['noa'], cancelada.pk)
 
         self.stdout.write(self.style.SUCCESS('Datos de demostración cargados.'))
-        self.stdout.write(f'Contrasinal de todas as contas: {CONTRASINAL}')
+        self.stdout.write(f'Contrasinal de todas as contas: {contrasinal}')
         self.stdout.write(f'  Superusuario:   plataforma{DOMINIO}')
         for datos in CENTROS:
             self.stdout.write(f"  Admin centro:   {datos['admin']}{DOMINIO}  ({datos['nome']})")

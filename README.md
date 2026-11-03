@@ -48,7 +48,7 @@ winpty python manage.py createsuperuser   # en Git Bash; noutros terminais, sen 
 
 ### Contas de demostración
 
-Despois de `python manage.py cargar_demo`, todas as contas teñen o contrasinal `Demo-Bambi-2026`:
+Despois de `python manage.py cargar_demo`, todas as contas teñen o contrasinal `Demo-Bambi-2026` (só en desenvolvemento; en produción é obrigatorio definir `BAMBI_DEMO_CONTRASINAL`):
 
 | Rol                     | Correo                         |
 | ----------------------- | ------------------------------ |

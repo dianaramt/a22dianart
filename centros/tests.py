@@ -1,11 +1,14 @@
+import os
 from io import StringIO
+from unittest.mock import patch
 
 from django.core.exceptions import ValidationError
-from django.core.management import call_command
-from django.test import TestCase
+from django.core.management import CommandError, call_command
+from django.test import TestCase, override_settings
 from django.urls import reverse
 
 from bambi.probas import crear_centro, crear_exemplar
+from usuarios.models import Usuario
 
 from .models import Centro
 
@@ -66,6 +69,7 @@ class EscaparateTests(TestCase):
 
 
 class CargarDemoTests(TestCase):
+    @override_settings(DEBUG=True)
     def test_pode_executarse_varias_veces_e_borrar(self):
         call_command('cargar_demo', stdout=StringIO())
         call_command('cargar_demo', stdout=StringIO())
@@ -77,3 +81,19 @@ class CargarDemoTests(TestCase):
         crear_centro('meu-centro')
         call_command('cargar_demo', '--borrar', stdout=StringIO())
         self.assertTrue(Centro.objects.filter(slug='meu-centro').exists())
+
+    @override_settings(DEBUG=False)
+    def test_en_producion_exixe_contrasinal_propio(self):
+        with patch.dict(os.environ):
+            os.environ.pop('BAMBI_DEMO_CONTRASINAL', None)
+            with self.assertRaises(CommandError):
+                call_command('cargar_demo', stdout=StringIO())
+        self.assertFalse(Centro.objects.exists())
+
+    @override_settings(DEBUG=False)
+    def test_en_producion_usa_o_contrasinal_da_variable(self):
+        with patch.dict(os.environ, {'BAMBI_DEMO_CONTRASINAL': 'Outro-Contrasinal-Proba'}):
+            call_command('cargar_demo', stdout=StringIO())
+        superusuario = Usuario.objects.get(email='plataforma@demo.bambi.test')
+        self.assertTrue(superusuario.check_password('Outro-Contrasinal-Proba'))
+        self.assertFalse(superusuario.check_password('Demo-Bambi-2026'))
