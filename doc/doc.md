@@ -22,6 +22,8 @@
   - [Identificación de recursos](#identificación-de-recursos)
   - [Planificación temporal](#planificación-temporal)
   - [Orzamento](#orzamento)
+- [Codificación e probas](#codificación-e-probas)
+  - [Prototipos realizados](#prototipos-realizados)
 - [Conclusións](#conclusións)
 - [Referencias, fontes consultadas e recursos externos](#referencias-fontes-consultadas-e-recursos-externos)
 
@@ -317,6 +319,29 @@ O calendario é orientativo e concentraríase a parte máis técnica no mes de n
 | **Total económico estimado** |                    | **3.055 €** |
 
 Esta é unha estimación do valor do traballo: as **200 horas** equivalen a **50 xornadas de 4 horas**. Como desenvolvo eu o proxecto, os **3.000 €** de man de obra non son un gasto que vaia pagar. O desembolso real previsto sería de **55 €**: 40 € polo aloxamento e 15 € polo dominio. O ordenador e a conexión xa están dispoñibles e non supoñen un custo adicional.
+
+## Codificación e probas
+
+### Prototipos realizados
+
+#### Prototipo 1
+
+**Data:** 3 de novembro de 2026
+
+**Descrición:** primeira versión funcional de Bambi, unha aplicación Django con plantillas e Bootstrap, publicada en PythonAnywhere con datos ficticios en <https://a22dianart.pythonanywhere.com>. Inclúe o percorrido principal: o lector atopa un libro e resérvao, e o centro xestiona o seu catálogo e as súas reservas. Nesta versión a base de datos despregada é SQLite. O código conta con 67 probas automáticas de Django, que se superan todas. Quedan pendentes a caducidade automática das reservas, os puntos e o bloqueo por fiabilidade, e o contador de visitas.
+
+**Funcionalidades implementadas:**
+
+- **Portada e escaparates públicos:** consulta sen iniciar sesión dos centros activos e dos seus catálogos, coa identidade visual de cada centro.
+- **Idiomas:** interface en galego, castelán e inglés.
+- **Contas e permisos:** rexistro de lectores, inicio e peche de sesión e acceso segundo o rol (lector, administrador de centro ou superusuario).
+- **Xestión da plataforma:** o superusuario crea centros, cambia o seu estado e xestiona os seus administradores.
+- **Personalización do escaparate:** o administrador edita nome, descrición, localización, logotipo, cores, tipografía e días de reserva.
+- **Xestión do catálogo:** o administrador crea, edita, retira e cambia o estado dos exemplares do seu centro.
+- **Busca:** por título, autoría ou ISBN, co centro e a dispoñibilidade de cada exemplar.
+- **Reservas do lector:** reserva de exemplares dispoñibles, consulta da área persoal e cancelación durante os 5 minutos seguintes a facer a reserva.
+- **Reservas do centro:** o administrador marca cada reserva como recollida ou non recollida e, nas bibliotecas, rexistra a devolución.
+- **Datos de demostración:** comando `cargar_demo` para crear centros, libros, usuarios e reservas ficticios.
 
 ## Conclusións
 
