@@ -6,6 +6,7 @@ from catalogo.busca import filtro_busca
 from catalogo.models import Exemplar
 
 from .models import Centro
+from .visitas import debe_contar, rexistrar_visita
 
 
 @require_GET
@@ -18,6 +19,8 @@ def portada(request):
 @require_GET
 def escaparate(request, slug):
     centro = get_object_or_404(Centro, slug=slug, estado=Centro.Estado.ACTIVO)
+    if debe_contar(request, centro):
+        rexistrar_visita(centro)
     exemplares = centro.exemplares.exclude(estado=Exemplar.Estado.RETIRADO)
     consulta = request.GET.get('q', '').strip()[:100]
     if consulta:

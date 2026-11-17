@@ -1,0 +1,13 @@
+# O que non se copia á imaxe de Docker
+.git
+.gitignore
+.vscode
+.venv
+__pycache__/
+*.pyc
+# Segredos e datos locais: nunca dentro da imaxe
+.env
+db.sqlite3
+media/
+staticfiles/
+doc/

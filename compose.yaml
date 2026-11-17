@@ -1,0 +1,50 @@
+# Bambi en local con Docker: Django + PostgreSQL
+# Arranque: docker compose up   ->   http://localhost:8000/
+#
+# Funciona sen .env (usa os valores por defecto de abaixo). Se existe un .env,
+# Docker Compose le del as variables POSTGRES_* (ver .env.example).
+# A versión publicada segue en PythonAnywhere (o plan gratuíto non executa contedores).
+
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-bambi}
+      POSTGRES_USER: ${POSTGRES_USER:-bambi}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-bambi-local}
+    volumes:
+      - datos_postgres:/var/lib/postgresql/data
+    # A web non arranca ata que PostgreSQL acepta conexións
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 2s
+      timeout: 5s
+      retries: 15
+
+  web:
+    build: .
+    # Migracións, datos de demostración (só a primeira vez) e servidor
+    command: >
+      sh -c "python manage.py migrate --noinput &&
+             python manage.py cargar_demo --se-baleira &&
+             python manage.py runserver 0.0.0.0:8000"
+    environment:
+      # Modo desenvolvemento: só para uso local, nunca nun servidor público
+      DJANGO_DEBUG: "True"
+      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1
+      POSTGRES_HOST: db
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: ${POSTGRES_DB:-bambi}
+      POSTGRES_USER: ${POSTGRES_USER:-bambi}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-bambi-local}
+    ports:
+      - "8000:8000"
+    volumes:
+      - media:/app/media
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  datos_postgres:
+  media:

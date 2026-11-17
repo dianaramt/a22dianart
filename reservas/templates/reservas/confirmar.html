@@ -34,9 +34,13 @@
     {% blocktranslate count minutos=minutos_cancelacion %}Só poderás cancelar a reserva durante o primeiro minuto despois de confirmala.{% plural %}Só poderás cancelar a reserva durante os {{ minutos }} primeiros minutos despois de confirmala.{% endblocktranslate %}
   </p>
 
+  {% include "reservas/_aviso_bloqueo.html" %}
+
   <form method="post" class="d-flex gap-2">
     {% csrf_token %}
-    <button type="submit" class="btn btn-bambi">{% translate "Confirmar reserva" %}</button>
+    {% if not user.esta_bloqueado %}
+      <button type="submit" class="btn btn-bambi">{% translate "Confirmar reserva" %}</button>
+    {% endif %}
     <a href="{% url 'catalogo:detalle' centro.slug exemplar.pk %}" class="btn btn-outline-secondary">{% translate "Volver" %}</a>
   </form>
 </div>

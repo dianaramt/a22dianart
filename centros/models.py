@@ -70,3 +70,25 @@ class Centro(models.Model):
     @property
     def familia_tipografica(self):
         return FAMILIAS_TIPOGRAFICAS.get(self.tipografia, FAMILIAS_TIPOGRAFICAS['sans'])
+
+
+class Visita(models.Model):
+    """Visitas ao escaparate dun centro agregadas por día.
+
+    Só se garda un total diario: nin IP, nin cookies, nin ningún dato da persoa visitante.
+    """
+
+    centro = models.ForeignKey(Centro, on_delete=models.CASCADE, related_name='visitas', verbose_name=_('centro'))
+    dia = models.DateField(_('día'))
+    total = models.PositiveIntegerField(_('total'), default=0)
+
+    class Meta:
+        verbose_name = _('visita')
+        verbose_name_plural = _('visitas')
+        ordering = ['-dia']
+        constraints = [
+            models.UniqueConstraint(fields=['centro', 'dia'], name='unha_fila_de_visitas_por_centro_e_dia'),
+        ]
+
+    def __str__(self):
+        return f'{self.centro} · {self.dia}: {self.total}'

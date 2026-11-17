@@ -1,0 +1,42 @@
+{% load i18n %}
+{# Métricas de visitas ao escaparate. Precisa `visitas` (centros.visitas.resumo_visitas) #}
+<section aria-labelledby="titulo-visitas">
+  <h2 id="titulo-visitas" class="h5">{% translate "Visitas ao escaparate" %}</h2>
+  <p class="small text-muted">
+    {% translate "Cóntase cada entrada ao escaparate, sen gardar ningún dato das persoas visitantes. Non se contan as visitas do persoal do centro." %}
+  </p>
+
+  <div class="row row-cols-2 row-cols-md-4 g-3 mb-3 text-center">
+    <div class="col"><div class="border rounded p-2">
+      <p class="h4 mb-0">{{ visitas.hoxe }}</p><p class="small text-muted mb-0">{% translate "Hoxe" %}</p>
+    </div></div>
+    <div class="col"><div class="border rounded p-2">
+      <p class="h4 mb-0">{{ visitas.semana }}</p><p class="small text-muted mb-0">{% translate "Últimos 7 días" %}</p>
+    </div></div>
+    <div class="col"><div class="border rounded p-2">
+      <p class="h4 mb-0">{{ visitas.mes }}</p><p class="small text-muted mb-0">{% translate "Últimos 30 días" %}</p>
+    </div></div>
+    <div class="col"><div class="border rounded p-2">
+      <p class="h4 mb-0">{{ visitas.total }}</p><p class="small text-muted mb-0">{% translate "Total" %}</p>
+    </div></div>
+  </div>
+
+  {% if visitas.serie %}
+    <figure class="mb-0">
+      <div class="visitas-grafica d-flex align-items-end gap-1" aria-hidden="true">
+        {% for dia, total, porcentaxe in visitas.serie %}
+          <div class="visitas-barra flex-fill" style="height: {{ porcentaxe }}%" title="{{ dia|date:'j/m' }}: {{ total }}"></div>
+        {% endfor %}
+      </div>
+      <figcaption class="small text-muted mt-1">{% translate "Visitas por día nas dúas últimas semanas" %}</figcaption>
+      {# Táboa equivalente para lectores de pantalla #}
+      <table class="visually-hidden">
+        <caption>{% translate "Visitas por día" %}</caption>
+        <tr><th scope="col">{% translate "Día" %}</th><th scope="col">{% translate "Visitas" %}</th></tr>
+        {% for dia, total, porcentaxe in visitas.serie %}
+          <tr><td>{{ dia|date:"j/m/Y" }}</td><td>{{ total }}</td></tr>
+        {% endfor %}
+      </table>
+    </figure>
+  {% endif %}
+</section>

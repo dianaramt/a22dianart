@@ -36,8 +36,10 @@
   </div>
 {% endif %}
 
-<div class="d-flex flex-wrap gap-2">
+<div class="d-flex flex-wrap gap-2 mb-5">
   <a href="{% url 'panel:exemplar_novo' centro.slug %}" class="btn btn-bambi">{% translate "Engadir libro" %}</a>
   <a href="{% url 'panel:reservas' centro.slug %}" class="btn btn-outline-secondary">{% translate "Atender reservas" %}</a>
 </div>
+
+{% include "panel/_visitas.html" %}
 {% endblock %}

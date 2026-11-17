@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 16:31+0100\n"
+"POT-Creation-Date: 2026-11-16 21:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,7 +34,7 @@ msgstr "On loan"
 msgid "Retirado"
 msgstr "Withdrawn"
 
-#: .\catalogo\models.py:19 .\centros\models.py:59
+#: .\catalogo\models.py:19 .\centros\models.py:59 .\centros\models.py:81
 msgid "centro"
 msgstr "centre"
 
@@ -59,6 +59,7 @@ msgid "estado"
 msgstr "status"
 
 #: .\catalogo\models.py:26 .\centros\models.py:56 .\reservas\models.py:26
+#: .\reservas\models.py:80
 msgid "creado en"
 msgstr "created at"
 
@@ -124,7 +125,7 @@ msgstr "Catalogue"
 
 #: .\catalogo\templates\catalogo\detalle.html:24
 #: .\panel\templates\panel\plataforma\inicio.html:35
-#: .\reservas\templates\reservas\area_persoal.html:53
+#: .\reservas\templates\reservas\area_persoal.html:55
 msgid "Centro"
 msgstr "Centre"
 
@@ -228,6 +229,22 @@ msgstr "administrators"
 msgid "centros"
 msgstr "centres"
 
+#: .\centros\models.py:82
+msgid "día"
+msgstr "day"
+
+#: .\centros\models.py:83
+msgid "total"
+msgstr "total"
+
+#: .\centros\models.py:86
+msgid "visita"
+msgstr "visit"
+
+#: .\centros\models.py:87
+msgid "visitas"
+msgstr "visits"
+
 #: .\centros\templates\centros\base_centro.html:20
 #, python-format
 msgid "Logo de %(nome)s"
@@ -256,8 +273,8 @@ msgstr "Find your next book close to home"
 
 #: .\centros\templates\centros\portada.html:11
 msgid ""
-"Consulta o catálogo das librarías e bibliotecas da túa contorna, comproba se"
-" o libro está dispoñible e resérvao para recollelo en persoa."
+"Consulta o catálogo das librarías e bibliotecas da túa contorna, comproba se "
+"o libro está dispoñible e resérvao para recollelo en persoa."
 msgstr ""
 "Browse the catalogues of bookshops and libraries near you, check whether a "
 "book is available and reserve it to collect in person."
@@ -276,8 +293,8 @@ msgstr "Optional. 10 or 13 digits, with or without hyphens."
 
 #: .\panel\forms.py:24
 msgid ""
-"Este exemplar ten unha reserva ou préstamo en curso; o estado cámbiase desde"
-" Reservas."
+"Este exemplar ten unha reserva ou préstamo en curso; o estado cámbiase desde "
+"Reservas."
 msgstr ""
 "This copy has a reservation or loan in progress; its status is changed from "
 "Reservations."
@@ -346,8 +363,7 @@ msgid "Repite o contrasinal"
 msgstr "Repeat the password"
 
 #: .\panel\forms_plataforma.py:56
-msgid ""
-"Este correo pertence a unha conta que non é de administrador de centro."
+msgid "Este correo pertence a unha conta que non é de administrador de centro."
 msgstr "This email belongs to an account that is not a centre administrator."
 
 #: .\panel\forms_plataforma.py:58
@@ -361,6 +377,46 @@ msgstr "New accounts need an initial password."
 #: .\panel\forms_plataforma.py:71
 msgid "Os contrasinais non coinciden."
 msgstr "The passwords do not match."
+
+#: .\panel\templates\panel\_visitas.html:4
+msgid "Visitas ao escaparate"
+msgstr "Shopfront visits"
+
+#: .\panel\templates\panel\_visitas.html:6
+msgid "Cóntase cada entrada ao escaparate, sen gardar ningún dato das persoas visitantes. Non se contan as visitas do persoal do centro."
+msgstr "Each visit to the shopfront is counted without storing any data about visitors. Visits by the centre’s staff are not counted."
+
+#: .\panel\templates\panel\_visitas.html:11
+msgid "Hoxe"
+msgstr "Today"
+
+#: .\panel\templates\panel\_visitas.html:14
+msgid "Últimos 7 días"
+msgstr "Last 7 days"
+
+#: .\panel\templates\panel\_visitas.html:17
+msgid "Últimos 30 días"
+msgstr "Last 30 days"
+
+#: .\panel\templates\panel\_visitas.html:20
+msgid "Total"
+msgstr "Total"
+
+#: .\panel\templates\panel\_visitas.html:31
+msgid "Visitas por día nas dúas últimas semanas"
+msgstr "Visits per day over the last two weeks"
+
+#: .\panel\templates\panel\_visitas.html:34
+msgid "Visitas por día"
+msgstr "Visits per day"
+
+#: .\panel\templates\panel\_visitas.html:35
+msgid "Día"
+msgstr "Day"
+
+#: .\panel\templates\panel\_visitas.html:35
+msgid "Visitas"
+msgstr "Visits"
 
 #: .\panel\templates\panel\base_panel.html:4
 msgid "Panel"
@@ -376,8 +432,8 @@ msgstr "View public shopfront"
 
 #: .\panel\templates\panel\base_panel.html:20
 msgid ""
-"O centro aínda non está activo: podes preparar o catálogo, pero o escaparate"
-" non é público ata que a plataforma o active."
+"O centro aínda non está activo: podes preparar o catálogo, pero o escaparate "
+"non é público ata que a plataforma o active."
 msgstr ""
 "The centre is not active yet: you can prepare the catalogue, but the "
 "shopfront will not be public until the platform activates it."
@@ -406,7 +462,7 @@ msgstr "Search the catalogue"
 #: .\panel\templates\panel\catalogo.html:30
 #: .\panel\templates\panel\plataforma\centro_detalle.html:32
 #: .\panel\templates\panel\reservas.html:83
-#: .\reservas\templates\reservas\area_persoal.html:55
+#: .\reservas\templates\reservas\area_persoal.html:57
 msgid "Estado"
 msgstr "Status"
 
@@ -475,7 +531,7 @@ msgstr "Save and add another"
 
 #: .\panel\templates\panel\exemplar_form.html:16
 #: .\panel\templates\panel\plataforma\centro_novo.html:33
-#: .\reservas\templates\reservas\area_persoal.html:29
+#: .\reservas\templates\reservas\area_persoal.html:31
 msgid "Cancelar"
 msgstr "Cancel"
 
@@ -521,19 +577,26 @@ msgid_plural "%(total)s reservas activas"
 msgstr[0] "%(total)s active reservation"
 msgstr[1] "%(total)s active reservations"
 
-#: .\panel\templates\panel\plataforma\centro_detalle.html:41
+#: .\panel\templates\panel\plataforma\centro_detalle.html:36
+#, python-format
+msgid "%(total)s visita nos últimos 30 días"
+msgid_plural "%(total)s visitas nos últimos 30 días"
+msgstr[0] "%(total)s visit in the last 30 days"
+msgstr[1] "%(total)s visits in the last 30 days"
+
+#: .\panel\templates\panel\plataforma\centro_detalle.html:42
 msgid "Activar"
 msgstr "Activate"
 
-#: .\panel\templates\panel\plataforma\centro_detalle.html:47
+#: .\panel\templates\panel\plataforma\centro_detalle.html:48
 msgid "Desactivar"
 msgstr "Deactivate"
 
-#: .\panel\templates\panel\plataforma\centro_detalle.html:53
+#: .\panel\templates\panel\plataforma\centro_detalle.html:54
 msgid "Volver a pendente"
 msgstr "Set back to pending"
 
-#: .\panel\templates\panel\plataforma\centro_detalle.html:59
+#: .\panel\templates\panel\plataforma\centro_detalle.html:60
 msgid ""
 "Se o desactivas, o escaparate e o panel deixan de estar accesibles, pero as "
 "reservas activas non se cancelan automaticamente."
@@ -541,28 +604,28 @@ msgstr ""
 "If you deactivate it, the shopfront and dashboard become inaccessible, but "
 "active reservations are not cancelled automatically."
 
-#: .\panel\templates\panel\plataforma\centro_detalle.html:67
+#: .\panel\templates\panel\plataforma\centro_detalle.html:68
 msgid "Descrición"
 msgstr "Description"
 
-#: .\panel\templates\panel\plataforma\centro_detalle.html:75
+#: .\panel\templates\panel\plataforma\centro_detalle.html:76
 #: .\panel\templates\panel\plataforma\inicio.html:37
 msgid "Administradores"
 msgstr "Administrators"
 
-#: .\panel\templates\panel\plataforma\centro_detalle.html:84
+#: .\panel\templates\panel\plataforma\centro_detalle.html:85
 msgid "Quitar"
 msgstr "Remove"
 
-#: .\panel\templates\panel\plataforma\centro_detalle.html:91
+#: .\panel\templates\panel\plataforma\centro_detalle.html:92
 msgid "Este centro non ten administrador. Asigna un antes de activalo."
 msgstr "This centre has no administrator. Assign one before activating it."
 
-#: .\panel\templates\panel\plataforma\centro_detalle.html:95
+#: .\panel\templates\panel\plataforma\centro_detalle.html:96
 msgid "Engadir administrador"
 msgstr "Add administrator"
 
-#: .\panel\templates\panel\plataforma\centro_detalle.html:100
+#: .\panel\templates\panel\plataforma\centro_detalle.html:101
 msgid "Engadir"
 msgstr "Add"
 
@@ -582,9 +645,8 @@ msgid ""
 "existencia. O centro créase como «Pendente» e non será público ata que o "
 "actives."
 msgstr ""
-"Before registering the centre, check the documents that prove it exists. The"
-" centre is created as “Pending” and will not be public until you activate "
-"it."
+"Before registering the centre, check the documents that prove it exists. The "
+"centre is created as “Pending” and will not be public until you activate it."
 
 #: .\panel\templates\panel\plataforma\centro_novo.html:23
 msgid "Datos do centro"
@@ -641,17 +703,18 @@ msgstr "Awaiting collection"
 
 #: .\panel\templates\panel\reservas.html:12
 #: .\panel\templates\panel\reservas.html:80
-#: .\reservas\templates\reservas\area_persoal.html:52
+#: .\reservas\templates\reservas\area_persoal.html:54
+#: .\reservas\templates\reservas\area_persoal.html:94
 msgid "Libro"
 msgstr "Book"
 
 #: .\panel\templates\panel\reservas.html:13
-#: .\panel\templates\panel\reservas.html:81 .\usuarios\models.py:37
+#: .\panel\templates\panel\reservas.html:81 .\usuarios\models.py:38
 msgid "Lector"
 msgstr "Reader"
 
 #: .\panel\templates\panel\reservas.html:14
-#: .\reservas\templates\reservas\area_persoal.html:23
+#: .\reservas\templates\reservas\area_persoal.html:25
 #: .\reservas\templates\reservas\detalle.html:20
 msgid "Recoller antes do"
 msgstr "Collect by"
@@ -693,7 +756,8 @@ msgid "Últimos movementos"
 msgstr "Recent activity"
 
 #: .\panel\templates\panel\reservas.html:82
-#: .\reservas\templates\reservas\area_persoal.html:54
+#: .\reservas\templates\reservas\area_persoal.html:56
+#: .\reservas\templates\reservas\area_persoal.html:92
 msgid "Data"
 msgstr "Date"
 
@@ -732,11 +796,11 @@ msgstr "Review reservations"
 msgid "Atender reservas"
 msgstr "Handle reservations"
 
-#: .\panel\views.py:77
+#: .\panel\views.py:79
 msgid "Libro engadido ao catálogo."
 msgstr "Book added to the catalogue."
 
-#: .\panel\views.py:100
+#: .\panel\views.py:102
 msgid ""
 "Gardáronse os datos, pero o estado non: cambiou mentres editabas (quizais "
 "alguén o reservou)."
@@ -744,49 +808,49 @@ msgstr ""
 "The details were saved, but not the status: it changed while you were "
 "editing (someone may have reserved it)."
 
-#: .\panel\views.py:102
+#: .\panel\views.py:104
 msgid "Libro actualizado."
 msgstr "Book updated."
 
-#: .\panel\views.py:126
+#: .\panel\views.py:128
 msgid "Reserva marcada como recollida."
 msgstr "Reservation marked as collected."
 
-#: .\panel\views.py:127
-msgid "Reserva marcada como non recollida. O libro volve estar dispoñible."
-msgstr "Reservation marked as not collected. The book is available again."
+#: .\panel\views.py:129
+msgid "Reserva marcada como non recollida. O libro volve estar dispoñible e o lector recibe unha penalización."
+msgstr "Reservation marked as not collected. The book is available again and the reader receives a penalty."
 
-#: .\panel\views.py:128
+#: .\panel\views.py:130
 msgid "Devolución rexistrada. O libro volve estar dispoñible."
 msgstr "Return recorded. The book is available again."
 
-#: .\panel\views.py:154
+#: .\panel\views.py:157
 msgid "Escaparate actualizado."
 msgstr "Shopfront updated."
 
-#: .\panel\views_plataforma.py:47
+#: .\panel\views_plataforma.py:48
 msgid "Centro creado. Revisa os datos e actívao cando estea listo."
 msgstr "Centre created. Check the details and activate it when it is ready."
 
-#: .\panel\views_plataforma.py:59
+#: .\panel\views_plataforma.py:60
 #, python-format
 msgid "%(usuario)s xa pode xestionar o centro."
 msgstr "%(usuario)s can now manage the centre."
 
-#: .\panel\views_plataforma.py:77
+#: .\panel\views_plataforma.py:79
 msgid "Asigna polo menos un administrador antes de activar o centro."
 msgstr "Assign at least one administrator before activating the centre."
 
-#: .\panel\views_plataforma.py:81
+#: .\panel\views_plataforma.py:83
 #, python-format
 msgid "Estado do centro: %(estado)s."
 msgstr "Centre status: %(estado)s."
 
-#: .\panel\views_plataforma.py:91
+#: .\panel\views_plataforma.py:93
 msgid "Un centro activo debe ter polo menos un administrador."
 msgstr "An active centre must have at least one administrator."
 
-#: .\panel\views_plataforma.py:95
+#: .\panel\views_plataforma.py:97
 #, python-format
 msgid "%(usuario)s xa non administra este centro."
 msgstr "%(usuario)s no longer manages this centre."
@@ -807,7 +871,7 @@ msgstr "Expired"
 msgid "Devolta"
 msgstr "Returned"
 
-#: .\reservas\models.py:22
+#: .\reservas\models.py:22 .\reservas\models.py:72
 msgid "lector"
 msgstr "reader"
 
@@ -823,7 +887,7 @@ msgstr "updated at"
 msgid "puntos aplicados"
 msgstr "points applied"
 
-#: .\reservas\models.py:33
+#: .\reservas\models.py:33 .\reservas\models.py:75
 msgid "reserva"
 msgstr "reservation"
 
@@ -831,34 +895,80 @@ msgstr "reservation"
 msgid "reservas"
 msgstr "reservations"
 
-#: .\reservas\servizos.py:22
+#: .\reservas\models.py:66
+msgid "Reserva non recollida"
+msgstr "Reservation not collected"
+
+#: .\reservas\models.py:67
+msgid "Reserva caducada"
+msgstr "Reservation expired"
+
+#: .\reservas\models.py:68
+msgid "Reserva recollida"
+msgstr "Reservation collected"
+
+#: .\reservas\models.py:69
+msgid "Bloqueo temporal"
+msgstr "Temporary block"
+
+#: .\reservas\models.py:78
+msgid "cambio"
+msgstr "change"
+
+#: .\reservas\models.py:79
+msgid "motivo"
+msgstr "reason"
+
+#: .\reservas\models.py:84
+msgid "actor"
+msgstr "actor"
+
+#: .\reservas\models.py:88
+msgid "evento de fiabilidade"
+msgstr "reliability event"
+
+#: .\reservas\models.py:89
+msgid "eventos de fiabilidade"
+msgstr "reliability events"
+
+#: .\reservas\servizos.py:25
 msgid "Só as contas de lector poden reservar libros."
 msgstr "Only reader accounts can reserve books."
 
-#: .\reservas\servizos.py:34 .\reservas\servizos.py:45
+#: .\reservas\servizos.py:34
+#, python-format
+msgid "A túa conta está bloqueada para reservar ata o %(data)s por non recoller reservas."
+msgstr "Your account is blocked from making reservations until %(data)s for not collecting reservations."
+
+#: .\reservas\servizos.py:46 .\reservas\servizos.py:57
 msgid "Este libro xa non está dispoñible."
 msgstr "This book is no longer available."
 
-#: .\reservas\servizos.py:55
+#: .\reservas\servizos.py:67
 msgid "Non se atopou ningunha reserva activa para cancelar."
 msgstr "No active reservation was found to cancel."
 
-#: .\reservas\servizos.py:59
+#: .\reservas\servizos.py:71
 #, python-format
 msgid ""
-"Xa pasou o prazo de %(minutos)s minutos para cancelar. Se non vas recollela,"
-" avisa ao centro."
+"Xa pasou o prazo de %(minutos)s minutos para cancelar. Se non vas recollela, "
+"avisa ao centro."
 msgstr ""
 "The %(minutos)s-minute cancellation window has passed. If you are not going "
 "to collect it, let the centre know."
 
-#: .\reservas\servizos.py:81
+#: .\reservas\servizos.py:93 .\reservas\servizos.py:102
 msgid "A reserva non existe ou xa foi atendida."
 msgstr "The reservation does not exist or has already been handled."
 
-#: .\reservas\servizos.py:111
+#: .\reservas\servizos.py:131
 msgid "Só as bibliotecas rexistran devolucións."
 msgstr "Only libraries record returns."
+
+#: .\reservas\templates\reservas\_aviso_bloqueo.html:5
+#, python-format
+msgid "Non podes facer reservas ata o %(data)s porque non recolliches varias reservas."
+msgstr "You cannot make reservations until %(data)s because you did not collect several reservations."
 
 #: .\reservas\templates\reservas\_aviso_cancelacion.html:5
 #, python-format
@@ -878,29 +988,64 @@ msgstr ""
 msgid "As miñas reservas"
 msgstr "My reservations"
 
-#: .\reservas\templates\reservas\area_persoal.html:11
+#: .\reservas\templates\reservas\area_persoal.html:13
 msgid "Activas"
 msgstr "Active"
 
-#: .\reservas\templates\reservas\area_persoal.html:39
+#: .\reservas\templates\reservas\area_persoal.html:41
 msgid "Non tes reservas activas."
 msgstr "You have no active reservations."
 
-#: .\reservas\templates\reservas\area_persoal.html:40
+#: .\reservas\templates\reservas\area_persoal.html:42
 msgid "Buscar un libro"
 msgstr "Find a book"
 
-#: .\reservas\templates\reservas\area_persoal.html:46
+#: .\reservas\templates\reservas\area_persoal.html:48
 msgid "Historial"
 msgstr "History"
 
-#: .\reservas\templates\reservas\area_persoal.html:71
+#: .\reservas\templates\reservas\area_persoal.html:73
 msgid "Aínda non hai reservas anteriores."
 msgstr "No past reservations yet."
 
+#: .\reservas\templates\reservas\area_persoal.html:78 .\usuarios\admin.py:18
+msgid "Fiabilidade"
+msgstr "Reliability"
+
+#: .\reservas\templates\reservas\area_persoal.html:80
+#, python-format
+msgid "Tes %(puntos)s punto de penalización"
+msgid_plural "Tes %(puntos)s puntos de penalización"
+msgstr[0] "You have %(puntos)s penalty point"
+msgstr[1] "You have %(puntos)s penalty points"
+
+#: .\reservas\templates\reservas\area_persoal.html:81
+#, python-format
+msgid "o bloqueo chega aos %(puntos_bloqueo)s"
+msgstr "you are blocked at %(puntos_bloqueo)s"
+
+#: .\reservas\templates\reservas\area_persoal.html:84
+#, python-format
+msgid "Cada reserva que non recolles suma un punto e cada reserva recollida resta un. Ao chegar ao límite non poderás reservar durante %(dias)s día e os puntos volven a cero."
+msgid_plural "Cada reserva que non recolles suma un punto e cada reserva recollida resta un. Ao chegar ao límite non poderás reservar durante %(dias)s días e os puntos volven a cero."
+msgstr[0] "Each reservation you do not collect adds one point and each one you collect takes one away. When you reach the limit you cannot make reservations for %(dias)s day and your points go back to zero."
+msgstr[1] "Each reservation you do not collect adds one point and each one you collect takes one away. When you reach the limit you cannot make reservations for %(dias)s days and your points go back to zero."
+
+#: .\reservas\templates\reservas\area_persoal.html:89
+msgid "Últimos cambios de fiabilidade"
+msgstr "Latest reliability changes"
+
+#: .\reservas\templates\reservas\area_persoal.html:93
+msgid "Motivo"
+msgstr "Reason"
+
+#: .\reservas\templates\reservas\area_persoal.html:95
+msgid "Puntos"
+msgstr "Points"
+
 #: .\reservas\templates\reservas\confirmar.html:4
 #: .\reservas\templates\reservas\confirmar.html:8
-#: .\reservas\templates\reservas\confirmar.html:39
+#: .\reservas\templates\reservas\confirmar.html:42
 msgid "Confirmar reserva"
 msgstr "Confirm reservation"
 
@@ -939,13 +1084,13 @@ msgid_plural ""
 "Só poderás cancelar a reserva durante os %(minutos)s primeiros minutos "
 "despois de confirmala."
 msgstr[0] ""
-"You can only cancel the reservation during the first minute after confirming"
-" it."
+"You can only cancel the reservation during the first minute after confirming "
+"it."
 msgstr[1] ""
 "You can only cancel the reservation during the first %(minutos)s minutes "
 "after confirming it."
 
-#: .\reservas\templates\reservas\confirmar.html:40
+#: .\reservas\templates\reservas\confirmar.html:44
 msgid "Volver"
 msgstr "Back"
 
@@ -1016,11 +1161,11 @@ msgstr "Change"
 msgid "Datos persoais"
 msgstr "Personal details"
 
-#: .\usuarios\admin.py:18
+#: .\usuarios\admin.py:19
 msgid "Rol e permisos"
 msgstr "Role and permissions"
 
-#: .\usuarios\admin.py:19
+#: .\usuarios\admin.py:20
 msgid "Datas"
 msgstr "Dates"
 
@@ -1032,43 +1177,51 @@ msgstr "The name the centre will see when you collect your reservation."
 msgid "Xa existe unha conta con este correo."
 msgstr "An account with this email already exists."
 
-#: .\usuarios\models.py:14
+#: .\usuarios\models.py:15
 msgid "O correo é obrigatorio"
 msgstr "Email is required"
 
-#: .\usuarios\models.py:31
+#: .\usuarios\models.py:32
 msgid "Un superusuario debe ter is_staff e is_superuser"
 msgstr "A superuser must have is_staff and is_superuser"
 
-#: .\usuarios\models.py:38
+#: .\usuarios\models.py:39
 msgid "Administrador de centro"
 msgstr "Centre administrator"
 
-#: .\usuarios\models.py:39
+#: .\usuarios\models.py:40
 msgid "Superusuario"
 msgstr "Superuser"
 
-#: .\usuarios\models.py:43
+#: .\usuarios\models.py:44
 msgid "correo electrónico"
 msgstr "email address"
 
-#: .\usuarios\models.py:44
+#: .\usuarios\models.py:45
 msgid "nome visible"
 msgstr "display name"
 
-#: .\usuarios\models.py:45
+#: .\usuarios\models.py:46
 msgid "rol"
 msgstr "role"
 
-#: .\usuarios\models.py:47
+#: .\usuarios\models.py:48
 msgid "idioma"
 msgstr "language"
 
-#: .\usuarios\models.py:56
+#: .\usuarios\models.py:51
+msgid "puntos de penalización"
+msgstr "penalty points"
+
+#: .\usuarios\models.py:52
+msgid "bloqueado ata"
+msgstr "blocked until"
+
+#: .\usuarios\models.py:60
 msgid "usuario"
 msgstr "user"
 
-#: .\usuarios\models.py:57
+#: .\usuarios\models.py:61
 msgid "usuarios"
 msgstr "users"
 

@@ -33,6 +33,7 @@
           <p class="small text-muted">
             {% blocktranslate count total=num_exemplares %}{{ total }} libro no catálogo{% plural %}{{ total }} libros no catálogo{% endblocktranslate %}
             · {% blocktranslate count total=reservas_activas %}{{ total }} reserva activa{% plural %}{{ total }} reservas activas{% endblocktranslate %}
+            · {% blocktranslate count total=visitas.mes %}{{ total }} visita nos últimos 30 días{% plural %}{{ total }} visitas nos últimos 30 días{% endblocktranslate %}
           </p>
           <div class="d-flex flex-wrap gap-2">
             {% if centro.estado != 'activo' %}

@@ -26,7 +26,7 @@ class Reserva(models.Model):
     creado_en = models.DateTimeField(_('creado en'), auto_now_add=True)
     vence_en = models.DateTimeField(_('vence en'))
     actualizado_en = models.DateTimeField(_('actualizado en'), auto_now=True)
-    # Para o sistema de fiabilidade (fase posterior)
+    # Puntos de penalización que sumou (+) ou restou (-) esta reserva ao pecharse
     puntos_aplicados = models.SmallIntegerField(_('puntos aplicados'), default=0)
 
     class Meta:
@@ -57,3 +57,37 @@ class Reserva(models.Model):
     @property
     def pode_cancelarse(self):
         return self.estado == self.Estado.ACTIVA and timezone.now() <= self.cancelable_ata
+
+
+class EventoFiabilidade(models.Model):
+    """Historial auditable de cada cambio nos puntos ou no bloqueo dun lector."""
+
+    class Motivo(models.TextChoices):
+        NON_RECOLLIDA = 'non_recollida', _('Reserva non recollida')
+        CADUCADA = 'caducada', _('Reserva caducada')
+        RECOLLIDA = 'recollida', _('Reserva recollida')
+        BLOQUEO = 'bloqueo', _('Bloqueo temporal')
+
+    lector = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='eventos_fiabilidade', verbose_name=_('lector')
+    )
+    reserva = models.ForeignKey(
+        Reserva, on_delete=models.SET_NULL, null=True, blank=True, related_name='eventos', verbose_name=_('reserva')
+    )
+    # Cambio nos puntos de penalización (+ suma, - resta)
+    cambio = models.SmallIntegerField(_('cambio'))
+    motivo = models.CharField(_('motivo'), max_length=20, choices=Motivo.choices)
+    creado_en = models.DateTimeField(_('creado en'), auto_now_add=True)
+    # Quen rexistrou a acción; baleiro se foi o propio sistema (caducidade)
+    actor = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='+',
+        verbose_name=_('actor'),
+    )
+
+    class Meta:
+        verbose_name = _('evento de fiabilidade')
+        verbose_name_plural = _('eventos de fiabilidade')
+        ordering = ['-creado_en', '-pk']
+
+    def __str__(self):
+        return f'{self.lector} {self.cambio:+d} ({self.get_motivo_display()})'

@@ -7,6 +7,8 @@
 <div class="container mt-4">
   <h1 class="h3 mb-4">{% translate "As miñas reservas" %}</h1>
 
+  {% include "reservas/_aviso_bloqueo.html" %}
+
   <section class="mb-5" aria-labelledby="titulo-activas">
     <h2 id="titulo-activas" class="h5">{% translate "Activas" %}</h2>
     {% if activas %}
@@ -42,7 +44,7 @@
     {% endif %}
   </section>
 
-  <section aria-labelledby="titulo-historial">
+  <section class="mb-5" aria-labelledby="titulo-historial">
     <h2 id="titulo-historial" class="h5">{% translate "Historial" %}</h2>
     {% if historial %}
       <div class="table-responsive">
@@ -69,6 +71,42 @@
       </div>
     {% else %}
       <p class="text-muted">{% translate "Aínda non hai reservas anteriores." %}</p>
+    {% endif %}
+  </section>
+
+  <section aria-labelledby="titulo-fiabilidade">
+    <h2 id="titulo-fiabilidade" class="h5">{% translate "Fiabilidade" %}</h2>
+    <p class="mb-2">
+      {% blocktranslate count puntos=user.puntos_penalizacion %}Tes {{ puntos }} punto de penalización{% plural %}Tes {{ puntos }} puntos de penalización{% endblocktranslate %}
+      ({% blocktranslate %}o bloqueo chega aos {{ puntos_bloqueo }}{% endblocktranslate %}).
+    </p>
+    <p class="small text-muted">
+      {% blocktranslate count dias=dias_bloqueo %}Cada reserva que non recolles suma un punto e cada reserva recollida resta un. Ao chegar ao límite non poderás reservar durante {{ dias }} día e os puntos volven a cero.{% plural %}Cada reserva que non recolles suma un punto e cada reserva recollida resta un. Ao chegar ao límite non poderás reservar durante {{ dias }} días e os puntos volven a cero.{% endblocktranslate %}
+    </p>
+    {% if eventos %}
+      <div class="table-responsive">
+        <table class="table table-sm align-middle">
+          <caption class="visually-hidden">{% translate "Últimos cambios de fiabilidade" %}</caption>
+          <thead>
+            <tr>
+              <th scope="col">{% translate "Data" %}</th>
+              <th scope="col">{% translate "Motivo" %}</th>
+              <th scope="col">{% translate "Libro" %}</th>
+              <th scope="col" class="text-end">{% translate "Puntos" %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for evento in eventos %}
+              <tr>
+                <td>{{ evento.creado_en|date:"j/m/Y" }}</td>
+                <td>{{ evento.get_motivo_display }}</td>
+                <td>{{ evento.reserva.exemplar.titulo|default:"—" }}</td>
+                <td class="text-end">{% if evento.cambio > 0 %}+{% endif %}{{ evento.cambio }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     {% endif %}
   </section>
 </div>

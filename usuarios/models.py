@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 
@@ -46,6 +47,9 @@ class Usuario(AbstractUser):
     idioma = models.CharField(
         _('idioma'), max_length=5, choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE
     )
+    # Fiabilidade do lector (o historial de cambios está en reservas.EventoFiabilidade)
+    puntos_penalizacion = models.PositiveSmallIntegerField(_('puntos de penalización'), default=0)
+    bloqueado_ata = models.DateTimeField(_('bloqueado ata'), null=True, blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -70,3 +74,7 @@ class Usuario(AbstractUser):
     @property
     def es_superusuario(self):
         return self.rol == self.Rol.SUPERUSUARIO
+
+    @property
+    def esta_bloqueado(self):
+        return self.bloqueado_ata is not None and self.bloqueado_ata > timezone.now()

@@ -7,6 +7,7 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_GET, require_http_methods, require_POST
 
 from centros.models import Centro
+from centros.visitas import resumo_visitas
 from reservas.models import Reserva
 from usuarios.models import Usuario
 
@@ -64,6 +65,7 @@ def centro_detalle(request, pk):
         'form_admin': form_admin,
         'reservas_activas': Reserva.objects.filter(exemplar__centro=centro, estado=Reserva.Estado.ACTIVA).count(),
         'num_exemplares': centro.exemplares.count(),
+        'visitas': resumo_visitas(centro),
     })
 
 

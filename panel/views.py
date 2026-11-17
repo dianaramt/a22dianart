@@ -11,6 +11,7 @@ from django.views.decorators.http import require_GET, require_http_methods, requ
 from catalogo.busca import filtro_busca
 from catalogo.models import Exemplar
 from centros.models import Centro
+from centros.visitas import resumo_visitas
 from reservas import servizos
 from reservas.models import Reserva
 
@@ -42,6 +43,7 @@ def resumo(request, centro):
         'total_prestados': exemplares.filter(estado=Exemplar.Estado.PRESTADO).count(),
         'total_reservas': reservas_activas.count(),
         'total_vencidas': reservas_activas.filter(vence_en__lt=timezone.now()).count(),
+        'visitas': resumo_visitas(centro),
     }
     return render(request, 'panel/resumo.html', contexto)
 
@@ -124,7 +126,7 @@ def reservas(request, centro):
 # gettext_lazy: as mensaxes tradúcense en cada petición, non ao cargar o módulo
 ACCIONS_RESERVA = {
     'recollida': (servizos.marcar_recollida, gettext_lazy('Reserva marcada como recollida.')),
-    'non_recollida': (servizos.marcar_non_recollida, gettext_lazy('Reserva marcada como non recollida. O libro volve estar dispoñible.')),
+    'non_recollida': (servizos.marcar_non_recollida, gettext_lazy('Reserva marcada como non recollida. O libro volve estar dispoñible e o lector recibe unha penalización.')),
     'devolta': (servizos.marcar_devolta, gettext_lazy('Devolución rexistrada. O libro volve estar dispoñible.')),
 }
 
@@ -136,7 +138,8 @@ def accion_reserva(request, centro, pk, accion):
         raise Http404
     funcion, mensaxe = ACCIONS_RESERVA[accion]
     try:
-        funcion(centro, pk)
+        # O actor queda no historial de fiabilidade do lector
+        funcion(centro, pk, actor=request.user)
         messages.success(request, mensaxe)
     except servizos.ReservaErro as erro:
         messages.error(request, str(erro))

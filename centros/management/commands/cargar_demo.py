@@ -4,15 +4,17 @@ Pódese executar varias veces: primeiro borra os datos de demo anteriores (só e
 """
 
 import os
+from datetime import timedelta
 
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
+from django.utils import timezone
 
 from catalogo.models import Exemplar
-from centros.models import Centro
+from centros.models import Centro, Visita
 from reservas.models import Reserva
-from reservas.servizos import cancelar_reserva, crear_reserva, marcar_recollida
+from reservas.servizos import cancelar_reserva, crear_reserva, marcar_non_recollida, marcar_recollida
 from usuarios.models import Usuario
 
 DOMINIO = '@demo.bambi.test'
@@ -76,12 +78,19 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('--borrar', action='store_true', help='Só borra os datos de demostración.')
+        parser.add_argument(
+            '--se-baleira', action='store_true',
+            help='Só carga os datos se a base de datos aínda non ten usuarios (para o arranque con Docker).',
+        )
 
     @transaction.atomic
     def handle(self, *args, **opcions):
         if opcions['borrar']:
             self.borrar()
             self.stdout.write(self.style.SUCCESS('Datos de demostración borrados.'))
+            return
+        if opcions['se_baleira'] and Usuario.objects.exists():
+            self.stdout.write('A base de datos xa ten usuarios: non se cargan os datos de demostración.')
             return
         contrasinal = contrasinal_demo()
         self.borrar()
@@ -132,6 +141,18 @@ class Command(BaseCommand):
         marcar_recollida(biblioteca, prestamo.pk)
         cancelada = crear_reserva(lectores['noa'], libro(biblioteca, 'Merlín e familia'))
         cancelar_reserva(lectores['noa'], cancelada.pk)
+        # Unha reserva sen recoller: Noa ten un punto de penalización
+        esquecida = crear_reserva(lectores['noa'], libro(libraria, 'Fariña'))
+        marcar_non_recollida(libraria, esquecida.pk, actor=libraria.administradores.first())
+
+        # Visitas das dúas últimas semanas (valores fixos, para que a demo sexa sempre igual)
+        hoxe = timezone.localdate()
+        for n, (total_biblioteca, total_libraria) in enumerate(
+            [(4, 9), (7, 12), (3, 6), (8, 15), (5, 11), (2, 4), (6, 10), (9, 14), (4, 7), (3, 8), (7, 13), (5, 9), (6, 12), (2, 5)]
+        ):
+            dia = hoxe - timedelta(days=n)
+            Visita.objects.create(centro=biblioteca, dia=dia, total=total_biblioteca)
+            Visita.objects.create(centro=libraria, dia=dia, total=total_libraria)
 
         self.stdout.write(self.style.SUCCESS('Datos de demostración cargados.'))
         self.stdout.write(f'Contrasinal de todas as contas: {contrasinal}')

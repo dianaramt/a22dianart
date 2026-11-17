@@ -1,0 +1,7 @@
+{% load i18n %}
+{# Aviso para o lector bloqueado por fiabilidade #}
+{% if user.is_authenticated and user.esta_bloqueado %}
+  <div class="alert alert-danger" role="alert">
+    {% blocktranslate with data=user.bloqueado_ata|date:"j/m/Y H:i" %}Non podes facer reservas ata o {{ data }} porque non recolliches varias reservas.{% endblocktranslate %}
+  </div>
+{% endif %}

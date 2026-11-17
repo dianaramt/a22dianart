@@ -58,4 +58,10 @@ def area_persoal(request):
     reservas = Reserva.objects.filter(lector=request.user).select_related('exemplar__centro')
     activas = [r for r in reservas if r.estado == Reserva.Estado.ACTIVA]
     historial = [r for r in reservas if r.estado != Reserva.Estado.ACTIVA]
-    return render(request, 'reservas/area_persoal.html', {'activas': activas, 'historial': historial})
+    return render(request, 'reservas/area_persoal.html', {
+        'activas': activas,
+        'historial': historial,
+        'eventos': request.user.eventos_fiabilidade.select_related('reserva__exemplar')[:10],
+        'puntos_bloqueo': settings.BAMBI_PUNTOS_BLOQUEO,
+        'dias_bloqueo': settings.BAMBI_DIAS_BLOQUEO,
+    })

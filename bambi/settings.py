@@ -105,12 +105,26 @@ WSGI_APPLICATION = 'bambi.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# PostgreSQL se está definido POSTGRES_HOST (o compose.yaml faino co contedor `db`);
+# se non, SQLite (desenvolvemento sen Docker e PythonAnywhere)
+if os.environ.get('POSTGRES_HOST'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': os.environ['POSTGRES_HOST'],
+            'PORT': os.environ.get('POSTGRES_PORT', '5432'),
+            'NAME': os.environ.get('POSTGRES_DB', 'bambi'),
+            'USER': os.environ.get('POSTGRES_USER', 'bambi'),
+            'PASSWORD': os.environ.get('POSTGRES_PASSWORD', ''),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
@@ -126,6 +140,13 @@ if len(sys.argv) > 1 and sys.argv[1] == 'test':
 # Regras de Bambi
 # Minutos que ten o lector para cancelar unha reserva despois de facela
 BAMBI_MINUTOS_CANCELACION = 5
+# Fiabilidade: cada reserva non recollida ou caducada suma puntos de penalización;
+# ao chegar ao límite, o lector queda bloqueado uns días e os puntos volven a 0.
+# Recoller unha reserva resta un punto (nunca baixa de 0).
+BAMBI_PUNTOS_NON_RECOLLIDA = 1
+BAMBI_PUNTOS_RECOLLIDA = 1
+BAMBI_PUNTOS_BLOQUEO = 3
+BAMBI_DIAS_BLOQUEO = 14
 
 LOGIN_URL = 'usuarios:entrar'
 # Redirixe segundo o rol (ver usuarios.views.url_inicio)

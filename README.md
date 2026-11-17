@@ -15,7 +15,24 @@ O obxectivo académico é desenvolver un prototipo funcional despregado con dato
 - Python 3.12 ou superior (desenvolvido con Python 3.14 e Django 6.1)
 - Git
 
-### Instalación en desenvolvemento
+### Posta en marcha con Docker (unha soa instrución)
+
+Só precisa [Docker](https://docs.docker.com/get-docker/) (en Windows e macOS, Docker Desktop aberto). Desde un clon do repositorio:
+
+```bash
+docker compose up
+```
+
+Isto constrúe a imaxe de Django, arranca PostgreSQL, aplica as migracións e, a primeira vez, carga os datos de demostración. A aplicación queda en <http://localhost:8000/> coas [contas de demostración](#contas-de-demostración).
+
+- Non fai falta ningún `.env`. Se queres outro nome de base de datos, usuario ou contrasinal, defíneos no `.env` (ver [.env.example](.env.example)) antes do primeiro arranque.
+- Os datos gárdanse en volumes de Docker e consérvanse entre arranques. Para empezar de cero: `docker compose down -v`.
+- Tras cambiar o código ou `requirements.txt`: `docker compose up --build`.
+- Tests dentro do contedor (contra PostgreSQL): `docker compose exec web python manage.py test`.
+
+Este modo é só para uso local (`DEBUG=True`). A versión publicada está en PythonAnywhere, porque o plan gratuíto non executa contedores (ver [doc/despregamento.md](doc/despregamento.md)).
+
+### Instalación en desenvolvemento (sen Docker)
 
 #### Windows
 
@@ -91,6 +108,18 @@ Despois de `python manage.py cargar_demo`, todas as contas teñen o contrasinal 
 
 Para borrar só os datos de demostración: `python manage.py cargar_demo --borrar`.
 
+### Caducidade das reservas
+
+As reservas que pasan o prazo de recollida péchanse co comando:
+
+```bash
+python manage.py caducar_reservas
+```
+
+Libera os exemplares e suma un punto de penalización a cada lector afectado. En produción execútase unha vez ao día como tarefa programada (ver [doc/despregamento.md](doc/despregamento.md)). Con Docker: `docker compose exec web python manage.py caducar_reservas`.
+
+As regras de fiabilidade están en `bambi/settings.py` (`BAMBI_PUNTOS_*` e `BAMBI_DIAS_BLOQUEO`): cada reserva non recollida ou caducada suma 1 punto, cada recollida resta 1, e con 3 puntos o lector non pode reservar durante 14 días.
+
 ### Tests
 
 ```bash
@@ -118,6 +147,16 @@ Lense do sistema ou dun ficheiro `.env` na raíz do proxecto (exemplo en [.env.e
 | `DJANGO_ALLOWED_HOSTS`   | Dominios desde os que se serve a web, separados por comas | `a22dianart.pythonanywhere.com`                                           |
 | `DJANGO_SSL_REDIRECT`    | Redirixe todo o tráfico HTTP a HTTPS                      | `True`                                                                    |
 | `BAMBI_DEMO_CONTRASINAL` | Contrasinal das contas creadas por `cargar_demo`          | Contrasinal propio e longo (só se se carga a demo)                        |
+
+Variables de PostgreSQL, só para Docker en local. Django usa PostgreSQL só se existe `POSTGRES_HOST` (defínea o `compose.yaml`); se non, usa SQLite, tanto en desenvolvemento sen Docker como en PythonAnywhere.
+
+| Variable            | Uso                                        | Valor por defecto no compose |
+| ------------------- | ------------------------------------------ | ---------------------------- |
+| `POSTGRES_DB`       | Nome da base de datos                      | `bambi`                      |
+| `POSTGRES_USER`     | Usuario de PostgreSQL                      | `bambi`                      |
+| `POSTGRES_PASSWORD` | Contrasinal de PostgreSQL                  | `bambi-local`                |
+| `POSTGRES_HOST`     | Servidor de PostgreSQL (o compose pon `db`) | Sen definir fóra de Docker   |
+| `POSTGRES_PORT`     | Porto de PostgreSQL                        | `5432`                       |
 
 ## Uso
 

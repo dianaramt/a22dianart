@@ -14,6 +14,8 @@
   - [Modelo de negocio](#modelo-de-negocio)
   - [Normativa](#normativa)
 - [Deseño](#deseño)
+  - [Arquitectura](#arquitectura)
+    - [Infraestrutura](#infraestrutura)
   - [Casos de Uso](#casos-de-uso)
   - [Navegación de ventás](#navegación-de-ventás)
   - [Base de Datos](#base-de-datos)
@@ -24,6 +26,8 @@
   - [Orzamento](#orzamento)
 - [Codificación e probas](#codificación-e-probas)
   - [Prototipos realizados](#prototipos-realizados)
+  - [Observacións](#observacións)
+  - [Innovación](#innovación)
 - [Conclusións](#conclusións)
 - [Referencias, fontes consultadas e recursos externos](#referencias-fontes-consultadas-e-recursos-externos)
 
@@ -93,7 +97,7 @@ De forma máis detallada estas serán as distintas funcionalidades que se teñen
 - Catálogo con título, autoría, ISBN opcional, descrición opcional e estado de dispoñibilidade.
 - Busca por título, autor/a e ISBN.
 - Alta e acceso de usuarios, permisos por rol e páxinas de xestión.
-- Reserva, cancelación, caducidade e actualización manual do estado de recollida/prestado.
+- Reserva, cancelación (só nos 5 minutos seguintes a facer a reserva), caducidade e actualización manual do estado de recollida/prestado.
 - Puntos e bloqueo temporal segundo unhas reglas.
 - Contador de visitas por escaparate.
 - Interface responsive e tradución da interface a tres idiomas.
@@ -121,20 +125,20 @@ O anteproxecto sinala como alternativas «Todos tus libros», de CEGAL, as tenda
 
 ### Funcionalidades
 
-| ID  | Funcionalidade                               | Actor(es)                           | Resultado / criterio de aceptación                                                                           |
-| --- | -------------------------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| F01 | Consultar a portada e os escaparates         | Visitante, lector                   | O catálogo e os datos públicos poden consultarse sen iniciar sesión                                          |
-| F02 | Cambiar idioma                               | Visitante, lector, administrador    | Interface dispoñible en gl, es e en; os contidos do centro poden requirir tradución propia                   |
-| F03 | Dar de alta, activar ou desactivar un centro | Superusuario                        | Un centro só aparece publicamente despois da súa activación                                                  |
-| F04 | Personalizar escaparate                      | Administrador de centro             | Pode editar logotipo, cores, tipografía dispoñible, descrición e localización do seu centro                  |
-| F05 | Xestionar catálogo                           | Administrador de centro             | Pode crear, editar, retirar e cambiar o estado dos libros do seu centro                                      |
-| F06 | Buscar libros                                | Visitante, lector                   | A busca acepta título, autor/a ou ISBN e amosa centro e dispoñibilidade                                      |
-| F07 | Crear conta e iniciar sesión                 | Lector, administrador, superusuario | Cada perfil accede ás vistas e accións autorizadas                                                           |
-| F08 | Reservar un exemplar dispoñible              | Lector                              | Reserva ligada ao centro e exemplar; impídese reservar se non hai dispoñibilidade ou o lector está bloqueado |
-| F09 | Cancelar e consultar reservas                | Lector                              | Só pode cancelar e consultar as súas propias reservas activas e históricas                                   |
-| F10 | Xestionar reservas                           | Administrador de centro             | Pode marcar recollida/préstamo, non recollida e devolución cando proceda                                     |
-| F11 | Aplicar caducidade e fiabilidade             | Sistema, administrador, lector      | A reserva caduca segundo prazo configurado; unha non recollida actualiza puntos e bloqueo de forma auditable |
-| F12 | Contabilizar visitas                         | Sistema, administrador              | Amósanse métricas agregadas; non se usa para perfilar visitantes                                             |
+| ID  | Funcionalidade                               | Actor(es)                           | Resultado / criterio de aceptación                                                                                                                                                                        |
+| --- | -------------------------------------------- | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| F01 | Consultar a portada e os escaparates         | Visitante, lector                   | O catálogo e os datos públicos poden consultarse sen iniciar sesión                                                                                                                                       |
+| F02 | Cambiar idioma                               | Visitante, lector, administrador    | Interface dispoñible en gl, es e en; os contidos do centro poden requirir tradución propia                                                                                                                |
+| F03 | Dar de alta, activar ou desactivar un centro | Superusuario                        | Un centro só aparece publicamente despois da súa activación                                                                                                                                               |
+| F04 | Personalizar escaparate                      | Administrador de centro             | Pode editar logotipo, cores, tipografía dispoñible, descrición e localización do seu centro                                                                                                               |
+| F05 | Xestionar catálogo                           | Administrador de centro             | Pode crear, editar, retirar e cambiar o estado dos libros do seu centro                                                                                                                                   |
+| F06 | Buscar libros                                | Visitante, lector                   | A busca acepta título, autor/a ou ISBN e amosa centro e dispoñibilidade                                                                                                                                   |
+| F07 | Crear conta e iniciar sesión                 | Lector, administrador, superusuario | Cada perfil accede ás vistas e accións autorizadas                                                                                                                                                        |
+| F08 | Reservar un exemplar dispoñible              | Lector                              | Reserva ligada ao centro e exemplar; impídese reservar se non hai dispoñibilidade ou o lector está bloqueado                                                                                              |
+| F09 | Cancelar e consultar reservas                | Lector                              | Só pode consultar as súas propias reservas activas e históricas; pode cancelar unha reserva activa durante os 5 minutos seguintes a facela. Despois dese prazo debe avisar ao centro se non vai recollela |
+| F10 | Xestionar reservas                           | Administrador de centro             | Pode marcar recollida/préstamo, non recollida e devolución cando proceda                                                                                                                                  |
+| F11 | Aplicar caducidade e fiabilidade             | Sistema, administrador, lector      | A reserva caduca segundo prazo configurado; unha non recollida actualiza puntos e bloqueo de forma auditable                                                                                              |
+| F12 | Contabilizar visitas                         | Sistema, administrador              | Amósanse métricas agregadas; non se usa para perfilar visitantes                                                                                                                                          |
 
 ### Tipos de usuarios
 
@@ -175,21 +179,37 @@ Nesta fase académica, o proxecto desenvolvese só por unha persoa e non está p
 
 ## Deseño
 
-Este deseño describe a arquitectura prevista para o prototipo académico. As decisións son propostas técnicas que se poderán axustar durante a implementación; non implican que a aplicación estea xa construída.
+Este deseño describe a arquitectura coa que está construído o prototipo académico.
 
 ### Arquitectura
 
-Nesta plataforma o navegador envía solicitudes HTTPS a Django, que renderiza as páxinas, comproba os permisos, aplica as regras do sistema e consulta a base de datos. As tarefas de caducidade de reservas executaríanse cun comando programado de Django; non se precisan microservizos nin unha cola de mensaxes para o prototipo.
+Bambi é unha aplicación monolítica Django. O navegador envía solicitudes HTTPS a Django, que renderiza as páxinas, comproba os permisos, aplica as regras do sistema e consulta a base de datos. A caducidade das reservas execútase cun comando de Django lanzado por unha tarefa programada; non se precisan microservizos nin unha cola de mensaxes.
 
-| Compoñente               | Tecnoloxía prevista                      | Función                                                            |
-| ------------------------ | ---------------------------------------- | ------------------------------------------------------------------ |
-| Interface web            | HTML, plantillas Django, Bootstrap e CSS | Amosar os escaparates e os paneis adaptados a móbiles e escritorio |
-| Servidor da aplicación   | Python e Django                          | Xestionar sesións, permisos, buscas, catálogo e reservas           |
-| Base de datos local      | SQLite                                   | Gardar os datos durante o desenvolvemento                          |
-| Base de datos despregada | PostgreSQL                               | Gardar de forma persistente os datos do prototipo despregado       |
-| Tarefa programada        | Comando de xestión de Django             | Caducar reservas cando venza o prazo                               |
+| Compoñente             | Tecnoloxía                                                                   | Función                                                                |
+| ---------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| Interface web          | HTML, plantillas Django, Bootstrap (servido localmente) e CSS propio         | Amosar os escaparates e os paneis adaptados a móbiles e escritorio     |
+| Servidor da aplicación | Python e Django 6.1                                                          | Xestionar sesións, permisos, buscas, catálogo, reservas e visitas      |
+| Base de datos          | SQLite (desenvolvemento e PythonAnywhere) ou PostgreSQL 17 (Docker en local) | Gardar os datos da aplicación                                          |
+| Ficheiros              | Sistema de ficheiros do servidor                                             | Servir os estáticos (`staticfiles/`) e os logotipos subidos (`media/`) |
+| Tarefa programada      | Comando `caducar_reservas`                                                   | Caducar unha vez ao día as reservas co prazo vencido                   |
 
 O fluxo técnico é: **navegador → HTTPS → aplicación Django → ORM de Django → base de datos**. A resposta volve á interface como unha páxina HTML. A tarefa programada consulta e actualiza as reservas vencidas.
+
+#### Infraestrutura
+
+A aplicación funciona en tres contornos:
+
+| Contorno                 | Onde se executa                                                                                                | Base de datos | Servidor web                                      | Caducidade das reservas                        |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------- | ------------- | ------------------------------------------------- | ---------------------------------------------- |
+| Desenvolvemento          | Ordenador local, contorno virtual de Python                                                                    | SQLite        | `manage.py runserver`                             | Manual con `python manage.py caducar_reservas` |
+| Docker en local          | Dous contedores definidos en `compose.yaml`: `web` (imaxe do `Dockerfile`, Python 3.13) e `db` (PostgreSQL 17) | PostgreSQL    | `manage.py runserver` dentro do contedor          | Manual con `docker compose exec web ...`       |
+| Produción (demostración) | PythonAnywhere, plan gratuíto (PaaS) en <https://a22dianart.pythonanywhere.com>                                | SQLite        | Servidor WSGI de PythonAnywhere con HTTPS forzado | Tarefa diaria na pestana _Tasks_               |
+
+Django escolle a base de datos segundo a variable `POSTGRES_HOST`: se existe usa PostgreSQL e, se non, SQLite. O código é o mesmo nos tres contornos; só cambian as variables de contorno.
+
+O despregamento publicado usa SQLite e non contedores porque o plan gratuíto de PythonAnywhere non executa Docker e non inclúe PostgreSQL. Para un prototipo con datos ficticios e poucas persoas usuarias, SQLite abonda. Docker con PostgreSQL permite probar a aplicación nun contorno máis próximo a unha produción real. Se Bambi pasase a ter centros reais, habería que levala a un aloxamento con PostgreSQL e copias de seguridade automáticas.
+
+Os pasos do despregamento están en [despregamento.md](despregamento.md), e a posta en marcha con Docker no [README](../README.md#posta-en-marcha-con-docker-unha-soa-instrución).
 
 ### Casos de Uso
 
@@ -342,6 +362,30 @@ Esta é unha estimación do valor do traballo: as **200 horas** equivalen a **50
 - **Reservas do lector:** reserva de exemplares dispoñibles, consulta da área persoal e cancelación durante os 5 minutos seguintes a facer a reserva.
 - **Reservas do centro:** o administrador marca cada reserva como recollida ou non recollida e, nas bibliotecas, rexistra a devolución.
 - **Datos de demostración:** comando `cargar_demo` para crear centros, libros, usuarios e reservas ficticios.
+
+#### Prototipo 2
+
+**Data:** 17 de novembro de 2026
+
+**Descrición:** segunda versión de Bambi, que completa o fluxo de reservas coas funcionalidades que quedaran pendentes no prototipo 1: a caducidade automática, os puntos e o bloqueo por fiabilidade, e o contador de visitas. Engádese ademais unha posta en marcha local con Docker e PostgreSQL. O código conta con 89 probas automáticas de Django, que se superan todas.
+
+**Funcionalidades implementadas:**
+
+- **Caducidade das reservas:** o comando `caducar_reservas` pecha as reservas co prazo de recollida vencido e libera os exemplares. En produción execútase unha vez ao día como tarefa programada.
+- **Puntos de fiabilidade:** cada reserva non recollida ou caducada suma 1 punto ao lector e cada reserva recollida resta 1, sen baixar de 0.
+- **Bloqueo temporal:** ao chegar a 3 puntos, o lector non pode reservar durante 14 días e os puntos volven a 0. Amósase un aviso co final do bloqueo na área persoal e na confirmación da reserva.
+- **Historial de fiabilidade:** cada cambio de puntos e cada bloqueo gárdanse en `EventoFiabilidade`, co motivo, a reserva e quen o rexistrou. O lector consulta os seus puntos e o historial na área persoal.
+- **Contador de visitas:** conta diaria de entradas a cada escaparate, sen gardar datos das persoas visitantes. O administrador ve no panel as visitas de hoxe, dos últimos 7 e 30 días, o total e unha gráfica das dúas últimas semanas. O superusuario ve as visitas dos últimos 30 días de cada centro.
+- **Docker:** `docker compose up` arranca a aplicación cunha base de datos PostgreSQL e carga os datos de demostración.
+- **Regras configurables:** os prazos, os puntos e os días de bloqueo defínense en `bambi/settings.py` (`BAMBI_MINUTOS_CANCELACION`, `BAMBI_PUNTOS_*` e `BAMBI_DIAS_BLOQUEO`).
+
+### Observacións
+
+Durante a programación tomáronse algunhas decisións clave para o seu funcionamento como que o lector só poida cancelar durante os 5 minutos seguintes a facer a reserva (BAMBI_MINUTOS_CANCELACION). A cancelación serve para corrixir un erro. Despois, se non vai recoller o libro, ten que avisar ao centro.
+
+### Innovación
+
+A principal innovación da aplicación é que achega aos centros un escaparate propio sen programar coa súa propia identidade e ademais ca fiabilidade de ser vistos ao ser unha plataforma na que hai diversos centros.
 
 ## Conclusións
 

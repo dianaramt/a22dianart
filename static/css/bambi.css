@@ -46,3 +46,15 @@ button:focus-visible,
   outline: 3px solid #f0b429;
   outline-offset: 2px;
 }
+
+/* Gráfica de visitas do panel do centro (barras feitas con CSS) */
+.visitas-grafica {
+  height: 120px;
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+.visitas-barra {
+  min-height: 2px;
+  background-color: var(--bambi-principal);
+  border-radius: 2px 2px 0 0;
+}

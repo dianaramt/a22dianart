@@ -105,6 +105,16 @@ Activa **Force HTTPS** na sección *Security*.
 
 Preme **Reload** e abre `https://USUARIO.pythonanywhere.com`.
 
+## 6. Tarefa programada: caducidade das reservas
+
+Na pestana **Tasks**, crea unha tarefa diaria (a conta gratuíta permite unha) á hora que prefiras, por exemplo ás 03:00, co comando:
+
+```bash
+cd /home/USUARIO/a22dianart && /home/USUARIO/.virtualenvs/bambi-venv/bin/python manage.py caducar_reservas
+```
+
+Pecha as reservas co prazo vencido, libera os exemplares e aplica a penalización de fiabilidade. A saída (`Reservas caducadas: N`) queda no log da tarefa.
+
 ## Actualizar a web despois de cambios
 
 ```bash
